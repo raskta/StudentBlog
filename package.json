@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev --respawn --env-file .env src/app.ts"
+    "dev": "ts-node-dev --respawn --env-file .env src/app.ts",
+    "seed": "ts-node-dev --env-file .env src/utils/seeds/seeds.ts"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +19,8 @@
   },
   "dependencies": {
     "express": "^4.21.2",
-    "pg": "^8.13.1"
+    "pg": "^8.13.1",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20"
   }
 }

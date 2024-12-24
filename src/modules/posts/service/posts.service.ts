@@ -1,6 +1,9 @@
+import { getRepository } from '../repository/posts.repository';
+
 class PostService{
     async get(){
-        return 'Hello World';
+        const posts = await getRepository.find({ relations: ['usuario', 'usuarioAlteracao'] });
+        return posts;
     }
 }
 

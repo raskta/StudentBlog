@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Post } from '../../posts/models/posts.models';
 
 export type UserRole = 'Aluno' | 'Professor';
 
@@ -10,12 +11,12 @@ export class User {
   @Column({ type: 'varchar', length: 255 })
   nome!: string;
 
-  @Column({
-    type: 'enum',
-    enum: ['Aluno', 'Professor'],
-  })
-  role!: UserRole;
+  @Column({ type: 'enum', enum: ['Aluno', 'Professor'] })
+  role!: 'Aluno' | 'Professor';
 
   @Column({ type: 'boolean', default: true })
   ativo!: boolean;
+
+  @OneToMany(() => Post, (post) => post.usuario)
+  posts?: Post[];
 }

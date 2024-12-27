@@ -7,4 +7,16 @@ route.get("/", (req, res) => {
     postController.get(req, res);
 });
 
+route.get("/:id", (req, res, next) => {
+    postController.getbyId(req, res, next);
+});
+
+route.post("/", (req, res, next) => {
+    postController.create(req, res, next);
+});
+
+route.put("/:id", (req, res, next) => {
+    postController.update(req, res, next);
+});
+
 export default route;

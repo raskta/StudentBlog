@@ -9,6 +9,9 @@ export class User {
   id!: number;
 
   @Column({ type: 'varchar', length: 255 })
+  email!: string;
+
+  @Column({ type: 'varchar', length: 255 })
   nome!: string;
 
   @Column({ type: 'enum', enum: ['Aluno', 'Professor'] })

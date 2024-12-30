@@ -18,6 +18,14 @@ export const getUserById = async (id: number): Promise<User | null> => {
   });
 };
 
+// Buscar um usuário por email
+export const getUserByEmail = async (email: string): Promise<User | null> => {
+  return await userRepository.findOne({
+    where: { email },
+    relations: ['posts'],
+  });
+};
+
 // Criar um novo usuário
 export const createUser = async (user: User): Promise<User> => {
   const newUser = userRepository.create(user);
@@ -28,7 +36,7 @@ export const createUser = async (user: User): Promise<User> => {
 // Atualizar um usuário existente
 export const updateUser = async (id: number, user: Partial<User>): Promise<User | null> => {
   await userRepository.update(id, user);
-  return await getUserById(id); // Retorna o usuário atualizado
+  return await getUserById(id);
 };
 
 // Excluir um usuário por ID

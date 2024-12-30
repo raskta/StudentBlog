@@ -9,8 +9,8 @@ const seedDatabase = async () => {
   const postRepository = AppDataSource.getRepository(Post);
 
   // Criar usuários fictícios
-  const user1 = userRepository.create({ nome: 'Professor A', role: 'Professor', ativo: true });
-  const user2 = userRepository.create({ nome: 'Aluno B', role: 'Aluno', ativo: true });
+  const user1 = userRepository.create({ nome: 'Professor A', role: 'Professor', ativo: true, email: 'email1@gmail.com'});
+  const user2 = userRepository.create({ nome: 'Aluno B', role: 'Aluno', ativo: true,  email: 'email2@gmail.com'});
   await userRepository.save([user1, user2]);
 
   // Criar posts fictícios

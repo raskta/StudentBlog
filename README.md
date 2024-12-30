@@ -6,7 +6,7 @@ Sobre o desafio: "Desenvolver uma API para uma aplicação de blogging dinâmico
 
 ### 📘 Requisitos Funcionais
 
-- GET /posts - Lista de Posts: 
+- **GET /posts** - Lista de Posts: \**
     ▪ Este endpoint permitirá que os(as) estudantes visualizem uma lista de todos os posts disponíveis na página principal.
 
 - GET /posts/:id - Leitura de Posts: 

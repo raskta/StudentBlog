@@ -4,6 +4,16 @@ Projeto desenvolvido para resolver o Tech Challenge - Fase 2 - FIAP.
 
 Sobre o desafio: "_Desenvolver uma API para uma aplicação de blogging dinâmico._"
 
+**Integrantes**
+
+- Gabriel Nascimento - RM359635
+- Rodrigo Souza - RM359534
+- Stella Yano - RM359726
+- Vinicius Wrubleski - RM359675
+- Vitor Bassani - RM358848
+
+##
+
 ### 📘 Requisitos Funcionais
 
 - **GET /posts** - Lista de Posts: <br>
@@ -27,6 +37,8 @@ Sobre o desafio: "_Desenvolver uma API para uma aplicação de blogging dinâmic
 - **GET /posts/search** - Busca de Posts: <br>
     ▪ Este endpoint permitirá a busca de posts por palavras chave. Os usuários poderão passar uma query string com o termo de busca e o sistema retornará uma lista de posts que contêm esse termo no título ou conteúdo. 
 
+##
+
 ### 💻 Tecnologias Utilizadas
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -42,8 +54,9 @@ Sobre o desafio: "_Desenvolver uma API para uma aplicação de blogging dinâmic
 - Docker para containerização.
 - Swagger para documentação.
 
-### ☑  Como executar a aplicação
+##
 
+### ☑  Como executar a aplicação
 > _**Atenção**, Este projeto é executado dentro do Docker, certifique-se de ter instalado em sua máquina!_
 
 1. Clone este repositório.
@@ -52,6 +65,8 @@ Sobre o desafio: "_Desenvolver uma API para uma aplicação de blogging dinâmic
 4. Execute o comando `npm install` para instalar as dependencias necessárias.
 5. **Opcional,** caso queira executar em modo de desenvolvedor execute o comando `npm run dev`.
 6. Execute o comando `npm run start` para iniciar a aplicação em produção.
+
+##
 
 ### ☑  Como utilizar
 

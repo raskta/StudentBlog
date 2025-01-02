@@ -5,24 +5,20 @@ export const userRepository = AppDataSource.getRepository(User);
 
 // Buscar todos os usuários
 export const getUsers = async (): Promise<User[]> => {
-  return await userRepository.find({
-    relations: ['posts'],
-  });
+  return await userRepository.find({});
 };
 
 // Buscar um usuário por ID
 export const getUserById = async (id: number): Promise<User | null> => {
   return await userRepository.findOne({
-    where: { id },
-    relations: ['posts'],
+    where: { id }
   });
 };
 
 // Buscar um usuário por email
 export const getUserByEmail = async (email: string): Promise<User | null> => {
   return await userRepository.findOne({
-    where: { email },
-    relations: ['posts'],
+    where: { email }
   });
 };
 
@@ -39,7 +35,7 @@ export const updateUser = async (id: number, user: Partial<User>): Promise<User 
   return await getUserById(id);
 };
 
-// Excluir um usuário por ID
+// Excluir um usuário
 export const deleteUser = async (id: number): Promise<void> => {
   await userRepository.delete(id);
 };

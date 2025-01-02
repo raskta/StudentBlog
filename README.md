@@ -43,16 +43,18 @@ Sobre o desafio: "_Desenvolver uma API para uma aplicação de blogging dinâmic
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![NodeJS](https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/docs/latest/api/)
-![Static Badge](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
-![Static Badge](https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=whit)
-![Static Badge](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)
-![Static Badge](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white)
+[Static Badge](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+[Static Badge](https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=whit)
+[Static Badge](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)
+[Static Badge](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white)
+[Static Badge](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)
 
 
 - Typescript, Node js, Express e TypeORM para a construção da API.
 - PostgreSQL para o banco de dados.
 - Docker para containerização.
 - Swagger para documentação.
+- Jest para os testes unitários.
 
 ##
 
@@ -70,6 +72,6 @@ Sobre o desafio: "_Desenvolver uma API para uma aplicação de blogging dinâmic
 
 ### ☑  Como utilizar
 
-- Para executar a aplicação você pode utilizar algum software externo como Postman, Insominia, etc.
+- Para testar a aplicação você pode utilizar algum software externo como Postman, Insominia, etc.
 - Outra opção é utilizar o Vs code, instalar a extensão **REST Client** e executar os comandos localizados no arquivo `test.rest`.
 - Confira a documentação no link `localhost:3001/api-docs`.

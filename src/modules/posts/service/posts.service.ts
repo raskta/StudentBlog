@@ -1,12 +1,13 @@
 import { CustomError } from "../../../utils/error/custom.error";
 import { getUserById } from "../../users/repository/users.repository";
 import { PostDTO } from "../dto/posts.dto";
-import { Post } from "../models/posts.models";
 import {
+  deletePost,
   getPost,
   postCreate,
   postGetById,
   postUpdate,
+  searchPosts,
 } from "../repository/posts.repository";
 
 class PostService {
@@ -24,13 +25,16 @@ class PostService {
   }
 
   async create(post: PostDTO) {
-    
     const userData = await getUserById(post.idusuario);
     if (!userData) {
       throw new CustomError(`Usuário com id ${post.idusuario} não existe`, 400);
     }
-    
-    const newPost = await postCreate({...post,usuario:userData});
+
+    if (!post.titulo || !post.conteudo) {
+      throw new CustomError("Título e conteúdo são obrigatórios", 400);
+    }
+
+    const newPost = await postCreate({ ...post, usuario: userData });
     return newPost;
   }
 
@@ -38,6 +42,21 @@ class PostService {
     await this.getById(id);
     const updatedPost = await postUpdate(id, post);
     return updatedPost;
+  }
+
+  async delete(id: number) {
+    await this.getById(id);
+    await deletePost(id);
+    return { message: `Post com id ${id} deletado com sucesso` };
+  }
+
+  async search(keyword: string) {
+   
+    const posts = await searchPosts(keyword.trim());
+    if (!posts.length) {
+      return { message: `Nenhum post encontrado com o termo ${keyword}` };
+    }
+    return posts;
   }
 }
 

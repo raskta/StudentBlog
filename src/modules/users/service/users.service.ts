@@ -1,6 +1,6 @@
 import { CustomError } from "../../../utils/error/custom.error";
 import { UserDto } from "../dto/users.dto";
-import { createUser, getUserByEmail, getUserById, getUsers } from "../repository/users.repository";
+import { createUser, deleteUser, getUserByEmail, getUserById, getUsers, updateUser } from "../repository/users.repository";
 
 class UserService {
   async get() {
@@ -9,11 +9,11 @@ class UserService {
   }
 
   async getById(id: number) {
-    const post = await getUserById(id);
-    if (!post) {
-      throw new CustomError(`Post com id ${id} não encontrado`, 404);
+    const user = await getUserById(id);
+    if (!user) {
+      throw new CustomError(`User com id ${id} não encontrado`, 404);
     }
-    return post;
+    return user;
   }
 
   async getByEmail(email: string) {
@@ -31,6 +31,18 @@ class UserService {
     }
     const newUser = await createUser(user);
     return newUser;
+  }
+
+  async update(id: number, user: UserDto) {
+    await this.getById(id);
+    const updatedUser = await updateUser(id,user);
+    return updatedUser;
+  }
+
+  async delete(id: number) {
+    await this.getById(id);
+    await deleteUser(id);
+    return { message: `Usuário com id ${id} deletado com sucesso` };
   }
 }
 

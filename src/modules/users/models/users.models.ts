@@ -20,6 +20,6 @@ export class User {
   @Column({ type: 'boolean', default: true })
   ativo!: boolean;
 
-  @OneToMany(() => Post, (post) => post.usuario)
-  posts?: Post[];
+  // @OneToMany(() => Post, (post) => post.usuario)
+  // posts?: Post[];
 }

@@ -31,6 +31,8 @@ Sobre o desafio: "_Desenvolver uma API para uma aplicação de blogging dinâmic
 - Swagger para documentação.
 - Jest para os testes unitários.
 
+##
+
 ### ✔ Arquiterura
 
 A Api foi desenvolvida na arquitetura REST com princípios de modularização e separação de responsabilidades.
@@ -39,32 +41,35 @@ Organização do projeto:
 
 ```
 src/
-├── config/              # Configurações da aplicação (banco de dados, variáveis de ambiente, etc.)
-├── middleware/          # Middlewares personalizados (autenticação, validação, etc.)
-├── modules/             # Módulos da aplicação, separados por funcionalidade
-│   ├── posts/           # Módulo de Posts
-│   │   ├── controller/  # Lógica de entrada (handlers das rotas)
-│   │   ├── dto/         # Data Transfer Objects (validação e transformação de dados)
-│   │   ├── models/      # Definição de schemas ou classes de entidades
-│   │   ├── repository/  # Operações de banco de dados
-│   │   ├── router/      # Definição de rotas específicas
-│   │   └── service/     # Lógica de negócios
-│   │       └── tests    # Testes
-│   └── users/           # Módulo de Usuários (estrutura similar ao módulo de Posts)
+├── config/                  # Configurações da aplicação (banco de dados, variáveis de ambiente, etc.)
+│   ├── swagger.config.ts    # Configuração do Swagger
+├── middleware/              # Middlewares personalizados (autenticação, validação, etc.)
+├── modules/                 # Módulos da aplicação, separados por funcionalidade
+│   ├── posts/               # Módulo de Posts
+│   │   ├── controller/      # Lógica de entrada (handlers das rotas)
+│   │   ├── dto/             # Data Transfer Objects (validação e transformação de dados)
+│   │   ├── models/          # Definição de schemas ou classes de entidades
+│   │   ├── repository/      # Operações de banco de dados
+│   │   ├── router/          # Definição de rotas específicas
+│   │   └── service/         # Lógica de negócios
+│   │       └── tests        # Testes
+│   └── users/               # Módulo de Usuários (estrutura similar ao módulo de Posts)
 │       ├── controller/
 │       ├── dto/
 │       ├── models/
 │       ├── repository/
 │       ├── router/
 │       └── service/
-├── shared/              # Componentes reutilizáveis e utilitários
-│   ├── utils/           # Funções de apoio
-│   ├── error/           # Tratamento de erros personalizados
-│   ├── seeds/           # Dados iniciais
-│   └── routes/          # Centralização da chamada das rotas
-├── app.ts               # Ponto de entrada da aplicação
+├── shared/                  # Componentes reutilizáveis e utilitários
+│   ├── utils/               # Funções de apoio
+│   ├── error/               # Tratamento de erros personalizados
+│   ├── seeds/               # Dados iniciais
+│   └── routes/              # Centralização da chamada das rotas
+├── app.ts                   # Ponto de entrada da aplicação
 
 ```
+
+##
 
 ### 📘 Requisitos Funcionais
 
@@ -123,36 +128,36 @@ npm run seed
 
 ##
 
-###   Scripts disponíveis
-- `build` Compila o código TypeScript para JavaScript e gera os arquivos na pasta dist.
+###   Scripts
+**build** Compila o código TypeScript para JavaScript e gera os arquivos na pasta dist.
 ```
 npm run build
 ```
-- `dev` Inicia a aplicação em modo de desenvolvimento, recompilando automaticamente sempre que houver alterações no código. Usa ts-node-dev e carrega as variáveis do .env.
+**dev** Inicia a aplicação em modo de desenvolvimento, recompilando automaticamente sempre que houver alterações no código. Usa ts-node-dev e carrega as variáveis do .env.
 ```
 npm run dev
 ```
-- `seed` Executa os scripts de seed para popular o banco de dados com dados iniciais.
+**seed** Executa os scripts de seed para popular o banco de dados com dados iniciais.
 ```
 npm run seed
 ```
-- `test` Executa os testes usando jest e gera um relatório de cobertura de testes.
+**test** Executa os testes usando jest e gera um relatório de cobertura de testes.
 ```
 npm run test
 ```
-- `start` Compila o código e inicia a aplicação em modo de produção.
+**start** Compila o código e inicia a aplicação em modo de produção.
 ```
 npm run start
 ```
-- `docker-build` Reconstrói as imagens Docker sem usar o cache. Ideal para quando há alterações no Dockerfile ou nas dependências (package.json).
+**docker-build** Reconstrói as imagens Docker sem usar o cache. Ideal para quando há alterações no Dockerfile ou nas dependências (package.json).
 ```
 npm run docker-build
 ```
-- `docker` Sobe os containers Docker e, em seguida, limpa as imagens dangling (não utilizadas) para liberar espaço.
+**docker** Sobe os containers Docker e, em seguida, limpa as imagens dangling (não utilizadas) para liberar espaço.
 ```
 npm run docker
 ```
-- `docker-rebuild` Combina os scripts docker-build e docker. Primeiro, reconstrói as imagens sem cache, depois sobe os containers e limpa as imagens dangling.
+**docker-rebuild** Combina os scripts docker-build e docker. Primeiro, reconstrói as imagens sem cache, depois sobe os containers e limpa as imagens dangling.
 ```
 npm run docker-rebuild
 ```

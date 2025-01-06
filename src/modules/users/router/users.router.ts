@@ -11,8 +11,8 @@ router.get("/:id", (req, res, next) => {
     userController.getById(req, res, next);
 });
 
-router.post("/:id", (req, res, next) => {
-    userController.getById(req, res, next);
+router.post("/", (req, res, next) => {
+    userController.create(req, res, next);
 });
 
 router.put("/:id", (req, res, next) => {

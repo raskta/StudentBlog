@@ -18,9 +18,6 @@ class UserService {
 
   async getByEmail(email: string) {
     const post = await getUserByEmail(email);
-    if (!post) {
-      throw new CustomError(`Usuário com email ${email} não encontrado`, 404);
-    }
     return post;
   }
 

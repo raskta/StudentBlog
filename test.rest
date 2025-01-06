@@ -24,7 +24,7 @@ Content-Type: application/json
 }
 
 ### Atualizar post
-PUT http://localhost:3000/posts/9
+PUT http://localhost:3000/posts/6
 Content-Type: application/json
 
 {
@@ -34,12 +34,12 @@ Content-Type: application/json
     "urlimagem": null,
     "dtcriacao": "2024-12-27T03:02:12.450Z",
     "dtalteracao": "2024-12-27T03:02:12.450Z",
-    "usuario": 5,
-    "usuarioAlteracao": 6
+    "usuario": 3,
+    "usuarioAlteracao": 3
 }
 
 ### Excluir post
-DELETE http://localhost:3000/posts/4
+DELETE http://localhost:3000/posts/6
 
 
 
@@ -60,18 +60,18 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-  "nome": "João Silva",
+  "nome": "Fulano",
   "email": "email@gmail.com",
   "role": "Aluno",
   "ativo": true
 }
 
 ### Atualizar um usuário existente
-PUT http://localhost:3000/users/1
+PUT http://localhost:3000/users/5
 Content-Type: application/json
 
 {
-  "nome": "João Atualizado"
+  "nome": "Fulano Atualizado"
 }
 
 ### Excluir um usuário

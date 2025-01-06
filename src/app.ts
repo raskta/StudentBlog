@@ -1,9 +1,12 @@
 import express from 'express';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './config/swagger.config';
 import routes from './shared/routes/routes';
 import { initDatabase } from './config/data-source';
 import { errorHandler } from './middleware/errorHandler.middleware';
+
 
 dotenv.config();
 
@@ -13,6 +16,9 @@ const port = process.env.APP_PORT || 3000;
 //middlewares
 app.use(express.json());
 app.use(cors());
+
+// Configuração do Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //routes
 app.use(routes);

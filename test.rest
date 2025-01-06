@@ -3,16 +3,16 @@
 # ------------------------------------------
 
 ### Obter postagens
-GET http://localhost:3001/posts
+GET http://localhost:3000/posts
 
 ### Obter postagem por id
-GET http://localhost:3001/posts/3
+GET http://localhost:3000/posts/3
 
 ### Buscar postagens por palavra-chave
-GET http://localhost:3001/posts/search?keyword=Conteúdo
+GET http://localhost:3000/posts/search?keyword=Conteúdo
 
 ### Inserir um novo post
-POST http://localhost:3001/posts
+POST http://localhost:3000/posts
 Content-Type: application/json
 
 {
@@ -24,7 +24,7 @@ Content-Type: application/json
 }
 
 ### Atualizar post
-PUT http://localhost:3001/posts/9
+PUT http://localhost:3000/posts/9
 Content-Type: application/json
 
 {
@@ -39,7 +39,7 @@ Content-Type: application/json
 }
 
 ### Excluir post
-DELETE http://localhost:3001/posts/4
+DELETE http://localhost:3000/posts/4
 
 
 
@@ -50,13 +50,13 @@ DELETE http://localhost:3001/posts/4
 # ------------------------------------------
 
 ### Listar todos os usuários
-GET http://localhost:3001/users
+GET http://localhost:3000/users
 
 ### Buscar um usuário por ID
-GET http://localhost:3001/users/1
+GET http://localhost:3000/users/1
 
 ### Criar um novo usuário
-POST http://localhost:3001/users
+POST http://localhost:3000/users
 Content-Type: application/json
 
 {
@@ -67,7 +67,7 @@ Content-Type: application/json
 }
 
 ### Atualizar um usuário existente
-PUT http://localhost:3001/users/1
+PUT http://localhost:3000/users/1
 Content-Type: application/json
 
 {
@@ -75,4 +75,4 @@ Content-Type: application/json
 }
 
 ### Excluir um usuário
-DELETE http://localhost:3001/users/1
+DELETE http://localhost:3000/users/1

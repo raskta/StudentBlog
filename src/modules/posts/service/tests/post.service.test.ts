@@ -5,7 +5,7 @@ import {
   deletePost,
 } from "../../repository/posts.repository";
 import { getUserById } from "../../../users/repository/users.repository";
-import { CustomError } from "../../../../utils/error/custom.error";
+import { CustomError } from "../../../../shared/error/custom.error";
 
 jest.mock("../../repository/posts.repository", () => ({
   postCreate: jest.fn(),

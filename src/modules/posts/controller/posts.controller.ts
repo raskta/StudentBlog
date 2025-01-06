@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { postService } from "../service/posts.service";
-import { CustomError } from "../../../utils/error/custom.error";
+import { CustomError } from "../../../shared/error/custom.error";
 
 class PostController {
   async get(req: Request, res: Response) {

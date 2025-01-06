@@ -1,4 +1,4 @@
-import { CustomError } from "../../../utils/error/custom.error";
+import { CustomError } from "../../../shared/error/custom.error";
 import { getUserById } from "../../users/repository/users.repository";
 import { PostDTO } from "../dto/posts.dto";
 import {

@@ -14,6 +14,58 @@ Sobre o desafio: "_Desenvolver uma API para uma aplicação de blogging dinâmic
 
 ##
 
+### 💻 Tecnologias Utilizadas
+
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![NodeJS](https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/docs/latest/api/)
+![Static Badge](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![Static Badge](https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=whit)
+![Static Badge](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)
+![Static Badge](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white)
+![Static Badge](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)
+
+
+- Typescript, Node js, Express e TypeORM para a construção da API.
+- PostgreSQL para o banco de dados.
+- Docker para containerização.
+- Swagger para documentação.
+- Jest para os testes unitários.
+
+### ✔ Arquiterura
+
+A Api foi desenvolvida na arquitetura REST com princípios de modularização e separação de responsabilidades.
+
+Organização do projeto:
+
+```
+src/
+├── config/              # Configurações da aplicação (banco de dados, variáveis de ambiente, etc.)
+├── middleware/          # Middlewares personalizados (autenticação, validação, etc.)
+├── modules/             # Módulos da aplicação, separados por funcionalidade
+│   ├── posts/           # Módulo de Posts
+│   │   ├── controller/  # Lógica de entrada (handlers das rotas)
+│   │   ├── dto/         # Data Transfer Objects (validação e transformação de dados)
+│   │   ├── models/      # Definição de schemas ou classes de entidades
+│   │   ├── repository/  # Operações de banco de dados
+│   │   ├── router/      # Definição de rotas específicas
+│   │   └── service/     # Lógica de negócios
+│   │       └── tests    # Testes
+│   └── users/           # Módulo de Usuários (estrutura similar ao módulo de Posts)
+│       ├── controller/
+│       ├── dto/
+│       ├── models/
+│       ├── repository/
+│       ├── router/
+│       └── service/
+├── shared/              # Componentes reutilizáveis e utilitários
+│   ├── utils/           # Funções de apoio
+│   ├── error/           # Tratamento de erros personalizados
+│   ├── seeds/           # Dados iniciais
+│   └── routes/          # Centralização da chamada das rotas
+├── app.ts               # Ponto de entrada da aplicação
+
+```
+
 ### 📘 Requisitos Funcionais
 
 - **GET /posts** - Lista de Posts: <br>
@@ -39,46 +91,39 @@ Sobre o desafio: "_Desenvolver uma API para uma aplicação de blogging dinâmic
 
 ##
 
-### 💻 Tecnologias Utilizadas
-
-[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![NodeJS](https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/docs/latest/api/)
-![Static Badge](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
-![Static Badge](https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=whit)
-![Static Badge](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)
-![Static Badge](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white)
-![Static Badge](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)
-
-
-- Typescript, Node js, Express e TypeORM para a construção da API.
-- PostgreSQL para o banco de dados.
-- Docker para containerização.
-- Swagger para documentação.
-- Jest para os testes unitários.
-
-##
-
-### ☑  Como executar a aplicação
+### 🚀 Como executar a aplicação
 > _**Atenção**, Este projeto é executado dentro do Docker, certifique-se de ter instalado em sua máquina!_
 
 1. Clone este repositório.
-2. No terminal execute o comando `docker compose up` para subir as imagens necessárias.
-3. **Opcional,** caso queira inserir dados dummy no banco para testar execute o comando `npm run seed`.
-4. Execute o comando `npm install` para instalar as dependencias necessárias.
-5. **Opcional,** caso queira executar em modo de desenvolvedor execute o comando `npm run dev`.
-6. Execute o comando `npm run start` para iniciar a aplicação em produção.
+2. No terminal execute o comando, para subir as imagens necessárias:
+```
+docker compose up
+```
+3. A aplicação estará disponível no enderepo `localhost:3000` verifique a documentação das rotas disponíveis no link `localhost:3001/api-docs`.
 
-##
+###  ☑ Como editar a aplicação
 
-### ☑  Como utilizar
+1. Clone este repositório.
+2. Execute o comando para instalar as dependencias:
+```
+npm install
+```
+3. Para executar a aplicação em modo de desenvolvedor execute o comando:
+```
+npm run dev
+```
 
+**Opcional** 
+- caso queira inserir dados dummy no banco para testar execute o comando:
+```
+npm run seed
+```
 - Para testar a aplicação você pode utilizar algum software externo como Postman, Insominia, etc.
 - Outra opção é utilizar o Vs code, instalar a extensão **REST Client** e executar os comandos localizados no arquivo `test.rest`.
-- Confira a documentação no link `localhost:3001/api-docs`.
 
 ##
 
-###   Scripts
+###   Scripts disponíveis
 - `build` Compila o código TypeScript para JavaScript e gera os arquivos na pasta dist.
 ```
 npm run build

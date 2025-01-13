@@ -27,4 +27,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: studantblog-api:latest
+          tags: nascimento92/studantblog-api:latest

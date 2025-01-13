@@ -75,4 +75,4 @@ Content-Type: application/json
 }
 
 ### Excluir um usuário
-DELETE http://localhost:3000/users/1
+DELETE http://localhost:3000/users/5

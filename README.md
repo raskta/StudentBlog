@@ -104,7 +104,9 @@ src/
 ```
 docker compose up
 ```
-3. A aplicação estará disponível no enderepo `localhost:3000` verifique a documentação das rotas disponíveis no link `localhost:3001/api-docs`.
+3. A aplicação estará disponível no enderepo `localhost:3000` verifique a documentação das rotas disponíveis no link `localhost:3000/api-docs`.
+
+##
 
 ###  ☑ Como editar a aplicação
 
@@ -129,35 +131,35 @@ npm run seed
 ##
 
 ###   Scripts
-**build** Compila o código TypeScript para JavaScript e gera os arquivos na pasta dist.
+**build:** Compila o código TypeScript para JavaScript e gera os arquivos na pasta dist.
 ```
 npm run build
 ```
-**dev** Inicia a aplicação em modo de desenvolvimento, recompilando automaticamente sempre que houver alterações no código. Usa ts-node-dev e carrega as variáveis do .env.
+**dev:** Inicia a aplicação em modo de desenvolvimento, recompilando automaticamente sempre que houver alterações no código. Usa ts-node-dev e carrega as variáveis do .env.
 ```
 npm run dev
 ```
-**seed** Executa os scripts de seed para popular o banco de dados com dados iniciais.
+**seed:** Executa os scripts de seed para popular o banco de dados com dados iniciais.
 ```
 npm run seed
 ```
-**test** Executa os testes usando jest e gera um relatório de cobertura de testes.
+**test:** Executa os testes usando jest e gera um relatório de cobertura de testes.
 ```
 npm run test
 ```
-**start** Compila o código e inicia a aplicação em modo de produção.
+**start:** Compila o código e inicia a aplicação em modo de produção.
 ```
 npm run start
 ```
-**docker-build** Reconstrói as imagens Docker sem usar o cache. Ideal para quando há alterações no Dockerfile ou nas dependências (package.json).
+**docker-build:** Reconstrói as imagens Docker sem usar o cache. Ideal para quando há alterações no Dockerfile ou nas dependências (package.json).
 ```
 npm run docker-build
 ```
-**docker** Sobe os containers Docker e, em seguida, limpa as imagens dangling (não utilizadas) para liberar espaço.
+**docker:** Sobe os containers Docker e, em seguida, limpa as imagens dangling (não utilizadas) para liberar espaço.
 ```
 npm run docker
 ```
-**docker-rebuild** Combina os scripts docker-build e docker. Primeiro, reconstrói as imagens sem cache, depois sobe os containers e limpa as imagens dangling.
+**docker-rebuild:** Combina os scripts docker-build e docker. Primeiro, reconstrói as imagens sem cache, depois sobe os containers e limpa as imagens dangling.
 ```
 npm run docker-rebuild
 ```

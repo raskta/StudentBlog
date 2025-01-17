@@ -3,7 +3,10 @@ name: CI/CD Docker deploy
 on:
   push:
     branches:
-      - gabriel-nascimento
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:

@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme {
+  /* Fonts */
+  /* Colors */
+  --color-main-dark-blue: oklch(24.88% 0.1084 264.47);
+}
+
+@utility container {
+  margin: auto;
+}

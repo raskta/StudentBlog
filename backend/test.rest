@@ -1,0 +1,78 @@
+# ------------------------------------------
+# ---------------- POSTS ----------------
+# ------------------------------------------
+
+### Obter postagens
+GET http://localhost:3000/posts
+
+### Obter postagem por id
+GET http://localhost:3000/posts/3
+
+### Buscar postagens por palavra-chave
+GET http://localhost:3000/posts/search?keyword=Conteúdo
+
+### Inserir um novo post
+POST http://localhost:3000/posts
+Content-Type: application/json
+
+{
+  "titulo": "Novo Post",
+  "subtitulo": "Subtítulo do Novo Post",
+  "conteudo": "Este é o conteúdo do novo post.",
+  "urlimagem": null,
+  "idusuario": 3
+}
+
+### Atualizar post
+PUT http://localhost:3000/posts/6
+Content-Type: application/json
+
+{
+    "titulo": "Alterando o título",
+    "subtitulo": "Alterando Subtítulo",
+    "conteudo": "Conteúdo do Post",
+    "urlimagem": "https://placehold.co/600x400",
+    "dtcriacao": "2024-12-27T03:02:12.450Z",
+    "dtalteracao": "2024-12-27T03:02:12.450Z",
+    "usuario": 3,
+    "usuarioAlteracao": 3
+}
+
+### Excluir post
+DELETE http://localhost:3000/posts/6
+
+
+
+
+
+# ------------------------------------------
+# ---------------- USUÁRIOS ----------------
+# ------------------------------------------
+
+### Listar todos os usuários
+GET http://localhost:3000/users
+
+### Buscar um usuário por ID
+GET http://localhost:3000/users/1
+
+### Criar um novo usuário
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "nome": "Fulano",
+  "email": "email@gmail.com",
+  "role": "Aluno",
+  "ativo": true
+}
+
+### Atualizar um usuário existente
+PUT http://localhost:3000/users/5
+Content-Type: application/json
+
+{
+  "nome": "Fulano Atualizado"
+}
+
+### Excluir um usuário
+DELETE http://localhost:3000/users/5

@@ -1,0 +1,35 @@
+services:
+  app:
+    build: ./backend
+    image: studentblog-app:latest
+    container_name: app_blogging
+    ports:
+      - "${APP_PORT}:3000"
+    environment:
+      DATABASE_URL: "postgresql://${DB_USER}:${DB_PASSWORD}@database:5432/${DB_DATABASE}"
+    depends_on:
+      - database
+
+  database:
+    image: postgres
+    container_name: database_blogging
+    ports:
+      - "${DB_PORT}:5432"
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  frontend:
+    build: ./frontend
+    container_name: frontend_blogging
+    ports:
+      - "${FRONTEND_PORT}:3001"
+    depends_on:
+      - app
+
+volumes:
+  pgdata:
+    driver: local

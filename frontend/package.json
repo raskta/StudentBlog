@@ -1,0 +1,36 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start -p 3001 -d /app/.next",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "4.0.1",
+    "@tanstack/react-query": "5.66.0",
+    "lodash.kebabcase": "4.1.1",
+    "lucide-react": "0.474.0",
+    "next": "15.1.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "zustand": "5.0.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "3",
+    "@tanstack/eslint-plugin-query": "5.66.0",
+    "@types/lodash.kebabcase": "4.1.9",
+    "@types/node": "20",
+    "@types/react": "18",
+    "@types/react-dom": "18",
+    "eslint": "9",
+    "eslint-config-next": "15.1.6",
+    "postcss": "8.5.1",
+    "prettier": "3.4.2",
+    "prettier-plugin-tailwindcss": "0.6.11",
+    "tailwindcss": "4.0.0",
+    "typescript": "5"
+  }
+}

@@ -45,7 +45,7 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
   const dataFormatada = data.format("DD [de] MMMM [de] YYYY")
 
   return (
-    <main className="container mx-auto px-6 py-16 md:px-0">
+    <main className="container mx-auto px-6 py-6 md:px-0 md:py-16">
       <article>
         <section className="mx-auto max-w-xs space-y-6 text-center md:max-w-2xl">
           <div className="flex items-center justify-center gap-4 text-sm font-medium">

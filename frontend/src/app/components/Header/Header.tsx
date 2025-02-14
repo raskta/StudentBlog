@@ -1,12 +1,17 @@
 import Image from "next/image"
 import Logo from "/public/logo.png"
 import Nav from "./components/Nav/Nav"
+import Link from "next/link"
 
 export default function Header() {
   return (
     <header>
       <div className="container flex justify-between py-4">
-        <div className="flex items-center gap-2">
+        <Link
+          href={"/"}
+          title="Ir para a página de Início"
+          className="flex items-center gap-2"
+        >
           <Image
             src={Logo}
             width={46}
@@ -16,7 +21,7 @@ export default function Header() {
             quality={100}
           />
           <p className="text-main-dark-blue text-xl font-semibold">Educational Sphere</p>
-        </div>
+        </Link>
         <Nav />
       </div>
     </header>

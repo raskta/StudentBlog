@@ -1,3 +1,5 @@
+import { User } from "./user"
+
 export interface Post {
   id: number
   titulo: string
@@ -6,7 +8,7 @@ export interface Post {
   urlimagem?: string
   dtcriacao: Date
   dtalteracao: Date
-  idusuario: number
-  idusuarioalter?: number
+  usuario: User
+  usuarioAlteracao: User
   tituloslug: string
 }

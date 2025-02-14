@@ -1,9 +1,20 @@
 @import "tailwindcss";
+@import "tailwindcss/preflight.css" layer(base);
 
 @theme {
   /* Fonts */
   /* Colors */
   --color-main-dark-blue: oklch(24.88% 0.1084 264.47);
+  --color-raisin-black: oklch(25.23% 0.0071 325.79);
+}
+
+@layer base {
+  p,
+  a,
+  span,
+  time {
+    color: oklch(25.23% 0.0071 325.79);
+  }
 }
 
 @utility container {

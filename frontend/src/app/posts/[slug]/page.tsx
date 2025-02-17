@@ -11,7 +11,7 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
   const { slug } = use(params) // Correção: recebe params diretamente
   const router = useRouter()
   dayjs.locale("pt-br")
-  const { findPostBySluggedTitle, fetchPosts } = usePostStore()
+  const { getPostBySlug, fetchPosts } = usePostStore()
   const [post, setPost] = useState<Post | undefined>(undefined)
   const [loading, setLoading] = useState(true)
 
@@ -19,7 +19,7 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
     const loadData = async () => {
       setLoading(true)
       await fetchPosts()
-      const postFound = await findPostBySluggedTitle(slug)
+      const postFound = await getPostBySlug(slug)
 
       if (!postFound) {
         // TODO: throw 404 caso o post não seja encontrado
@@ -31,7 +31,7 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
     }
 
     loadData()
-  }, [slug, fetchPosts, findPostBySluggedTitle, router])
+  }, [slug, fetchPosts, getPostBySlug, router])
 
   if (loading) {
     return <div>Carregando...</div>
@@ -50,18 +50,18 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
         <section className="mx-auto max-w-xs space-y-6 text-center md:max-w-2xl">
           <div className="flex items-center justify-center gap-4 text-sm font-medium">
             <time
-              className="flex justify-end font-light"
+              className="rounded-full bg-blue-100 px-4 py-2 font-light"
               dateTime={post?.dtcriacao?.toString()}
             >
               {dataFormatada}
             </time>
-            <p className="rounded-full bg-zinc-200 px-4 py-2">{post?.usuario.nome}</p>
+            <p>{post?.usuario.nome}</p>
           </div>
           <div className="space-y-3">
             <h1 className="text-main-dark-blue text-3xl font-semibold tracking-wide">
               {post?.titulo}
             </h1>
-            <p className="font-light">{post?.subtitulo}</p>
+            <p className="font-normal">{post?.subtitulo}</p>
           </div>
         </section>
         {post?.urlimagem && (
@@ -73,8 +73,8 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
             alt={`Imagem que representa postagem ${post?.titulo}`}
           />
         )}
-        <section className="mx-auto max-w-xs pt-4 leading-7 md:max-w-2xl lg:max-w-4xl lg:pt-12 2xl:max-w-5xl">
-          <p>{post?.conteudo}</p>
+        <section className="mx-auto max-w-xs pt-4 md:max-w-2xl lg:max-w-4xl lg:pt-12 2xl:max-w-5xl">
+          <p className="leading-7 font-light">{post?.conteudo}</p>
         </section>
       </article>
     </main>

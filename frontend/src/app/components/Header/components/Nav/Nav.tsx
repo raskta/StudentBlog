@@ -2,8 +2,15 @@ import { LogInIcon } from "lucide-react"
 import NavLink from "./NavLink"
 import Link from "next/link"
 
+type Link = {
+  label: string
+  link: string
+  title: string
+}
+
 export default function Nav() {
-  const links = [
+  // TODO: limitar algumas rotas para somente usuários logados
+  const links: Link[] = [
     {
       label: "Início",
       link: "/",

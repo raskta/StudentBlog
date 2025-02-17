@@ -3,6 +3,8 @@
 
 @theme {
   /* Fonts */
+  --default-font-family: "Inter", sans-serif;
+  --font-title: "DM Sans", sans-serif;
   /* Colors */
   --color-main-dark-blue: oklch(24.88% 0.1084 264.47);
   --color-raisin-black: oklch(25.23% 0.0071 325.79);
@@ -14,6 +16,15 @@
   span,
   time {
     color: oklch(25.23% 0.0071 325.79);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-title);
   }
 }
 

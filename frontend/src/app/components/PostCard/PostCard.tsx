@@ -1,7 +1,6 @@
 import { Post } from "@/interfaces/post"
 import dayjs from "dayjs"
-import "dayjs/locale/pt-br" // Importa o idioma corretamente
-import { UserRound } from "lucide-react"
+import "dayjs/locale/pt-br"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -17,9 +16,9 @@ export default function PostCard({
   const dataFormatada = data.format("DD [de] MMMM [de] YYYY")
 
   return (
-    <div className="block w-xs rounded-3xl md:w-sm">
+    <div className="block w-xs rounded-3xl md:h-96 md:w-full">
       <Link
-        href={`/post/${tituloslug}`}
+        href={`/posts/${tituloslug}`}
         className="group/card relative"
         title={`Ver postagem: ${titulo}`}
       >
@@ -39,22 +38,14 @@ export default function PostCard({
           <h2>{titulo}</h2>
         </div>
       </Link>
-      <div className="space-y-2 px-2 pt-2 text-sm">
-        <time
-          className="flex justify-end font-medium"
-          dateTime={dtcriacao?.toString()}
-        >
-          {dataFormatada}
-        </time>
-        <p className="line-clamp-2">{subtitulo}</p>
-        <div className="flex items-center gap-1">
-          <UserRound
-            strokeWidth={1.5}
-            size={32}
-            color="#212421"
-          />
+      <div className="text-raisin-black space-y-3 px-2 pt-2 text-sm">
+        <div className="flex justify-end gap-2 font-medium">
           <p>{usuario?.nome}</p>
+          <span className="select-none">|</span>
+          <time dateTime={dtcriacao?.toString()}>{dataFormatada}</time>
         </div>
+        <p className="line-clamp-2 text-sm">{subtitulo}</p>
+        <div className="flex items-center gap-1"></div>
       </div>
     </div>
   )

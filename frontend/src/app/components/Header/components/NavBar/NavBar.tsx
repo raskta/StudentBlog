@@ -1,4 +1,3 @@
-import { LogInIcon } from "lucide-react"
 import NavLink from "./NavLink"
 import Link from "next/link"
 
@@ -35,7 +34,7 @@ export default function Nav() {
             />
           </li>
         ))}
-        <li>
+        {/* <li>
           <Link
             href={"/login"}
             className="font-title flex cursor-pointer items-center gap-1.5 rounded-full bg-zinc-300 px-2 py-1 transition-colors hover:bg-blue-300"
@@ -46,7 +45,7 @@ export default function Nav() {
             />
             Entrar
           </Link>
-        </li>
+        </li> */}
       </ul>
     </nav>
   )

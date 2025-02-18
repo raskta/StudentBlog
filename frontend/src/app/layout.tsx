@@ -32,7 +32,7 @@ export default function RootLayout({
       className="bg-zinc-50"
     >
       <body
-        className={`${dmSans.variable} ${inter.variable} container mx-auto px-8 antialiased md:px-0`}
+        className={`${dmSans.variable} ${inter.variable} container mx-auto px-6 antialiased md:px-0`}
       >
         <Header />
         <div
@@ -42,7 +42,7 @@ export default function RootLayout({
           {children}
         </div>
         <Toaster
-          position="top-center"
+          position="bottom-center"
           richColors
         />
       </body>

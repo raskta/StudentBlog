@@ -3,6 +3,7 @@
 import { usePostStore } from "@/stores/post-store"
 import dayjs from "dayjs"
 import { Edit3Icon, Trash2Icon } from "lucide-react"
+import Link from "next/link"
 import { useEffect } from "react"
 import { toast } from "sonner"
 
@@ -16,16 +17,30 @@ export default function PostsTable() {
   }, [fetchPosts])
 
   const handleDelete = (postId: number, postTitle: string) => {
-    toast(`Você gostaria de excluir o post ${postId} - ${postTitle}?`, {
+    toast(`Você gostaria de excluir: "${postId} - ${postTitle}?"`, {
       duration: Infinity,
-      action: {
-        label: "Confirmar",
-        onClick: async () => {
-          await deletePost(postId)
-          fetchPosts()
-          toast.success(`Post "${postId} - ${postTitle}" excluído com sucesso.`)
-        },
-      },
+      action: (
+        <div className="flex flex-row gap-4 **:cursor-pointer **:text-nowrap">
+          <button
+            className="rounded bg-red-200 px-1 py-2 font-semibold"
+            onClick={() => toast.dismiss()}
+          >
+            Cancelar
+          </button>
+
+          <button
+            className="rounded bg-green-200 px-1 py-2 font-semibold"
+            onClick={async () => {
+              await deletePost(postId)
+              fetchPosts()
+              toast.dismiss()
+              toast.success(`Post "${postId} - ${postTitle}" excluído com sucesso.`)
+            }}
+          >
+            Confirmar
+          </button>
+        </div>
+      ),
     })
   }
 
@@ -36,7 +51,7 @@ export default function PostsTable() {
           <tr className="**:text-main-dark-blue **:px-4 **:py-3 **:text-left **:text-sm **:font-semibold **:tracking-wide **:uppercase">
             <th>Id</th>
             <th>Título</th>
-            <th>Subtítulo</th>
+            <th className="hidden md:block">Subtítulo</th>
             <th>Data de criação</th>
             <th>Última alteração</th>
             <th>Proprietário</th>
@@ -47,11 +62,11 @@ export default function PostsTable() {
           {posts.map((post) => (
             <tr
               key={post.id}
-              className="hover:bg-main-dark-blue/10 transition-colors **:text-sm even:bg-gray-100/80"
+              className="transition-colors **:text-sm even:bg-gray-100/80 hover:bg-zinc-300"
             >
               <td className="px-4 py-3 font-semibold whitespace-nowrap">{post.id}</td>
               <td className="max-w-[240px] truncate px-4 py-3">{post.titulo}</td>
-              <td className="max-w-[240px] truncate px-4 py-3">{post.subtitulo}</td>
+              <td className="hidden max-w-[240px] truncate px-4 py-3 md:block">{post.subtitulo}</td>
               <td className="px-4 py-3 whitespace-nowrap">
                 {dayjs(post.dtcriacao).format("DD/MM/YYYY HH:mm")}
               </td>
@@ -59,18 +74,18 @@ export default function PostsTable() {
                 {dayjs(post.dtalteracao).format("DD/MM/YYYY HH:mm")}
               </td>
               <td className="px-4 py-3">{post.usuario.nome}</td>
-              <td className="content-center space-x-4">
-                <button
-                  type="button"
-                  className="cursor-pointer"
-                  title={`Editar post ${post.id} - ${post.titulo}`}
+              <td className="flex content-center items-center gap-6">
+                <Link
+                  href={`/posts/editar/${post.id}`}
+                  className="block cursor-pointer"
+                  title={`Editar post: "${post.id} - ${post.titulo}"`}
                 >
                   <Edit3Icon size={20} />
-                </button>
+                </Link>
                 <button
                   type="button"
                   className="cursor-pointer"
-                  title={`Excluir post ${post.id} - ${post.titulo}`}
+                  title={`Excluir post: "${post.id} - ${post.titulo}"`}
                   onClick={() => handleDelete(post.id, post.titulo)}
                 >
                   <Trash2Icon size={20} />

@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Logo from "/public/logo.png"
-import Nav from "./components/Nav/Nav"
+import Nav from "./components/NavBar/NavBar"
 import Link from "next/link"
 
 export default function Header() {
@@ -20,7 +20,9 @@ export default function Header() {
             alt="Globe with a book"
             quality={100}
           />
-          <p className="text-main-dark-blue font-title text-xl font-semibold">Educational Sphere</p>
+          <p className="text-main-dark-blue font-title hidden text-xl font-semibold md:block">
+            Educational Sphere
+          </p>
         </Link>
         <Nav />
       </div>

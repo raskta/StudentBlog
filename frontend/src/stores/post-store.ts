@@ -22,7 +22,9 @@ interface PostStoreActions {
   fetchPosts: () => Promise<void>
   createPost: (formData: Inputs) => Promise<void>
   deletePost: (id: number) => Promise<void>
+  updatePost: (id: number, data: Post) => Promise<void>
   getPostBySlug: (slug: string) => Post | undefined
+  getPostById: (id: number) => Post | undefined
   setSearchTerm: (term: string) => void
   resetStatus: () => void
 }
@@ -126,10 +128,26 @@ export const usePostStore = create<PostStoreState & PostStoreActions>()(
         }))
       },
 
+      updatePost: async (id: number, data: Post) => {
+        const response = await fetch(`http://localhost:3000/posts/${id}`, {
+          method: "UPDATE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        })
+
+        if (!response.ok) {
+          const error = await response.json()
+          throw new Error(error.message || `Erro ao editar post: ${id} - ${data.titulo}`)
+        }
+      },
+
       getPostBySlug: (slug: string) => {
         return get().posts.find((post) => post.tituloslug === slug)
       },
 
+      getPostById: (id: number) => {
+        return get().posts.find((post) => post.id === id)
+      },
       setSearchTerm: (term: string) => {
         set({ searchTerm: term.toLowerCase() })
       },

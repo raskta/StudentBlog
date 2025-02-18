@@ -74,7 +74,7 @@ export default function PostsTable() {
                 {dayjs(post.dtalteracao).format("DD/MM/YYYY HH:mm")}
               </td>
               <td className="px-4 py-3">{post.usuario.nome}</td>
-              <td className="flex content-center items-center gap-6">
+              <td className="flex content-center items-center gap-6 **:mt-2">
                 <Link
                   href={`/posts/editar/${post.id}`}
                   className="block cursor-pointer"

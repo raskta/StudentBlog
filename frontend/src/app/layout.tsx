@@ -44,6 +44,8 @@ export default function RootLayout({
         <Toaster
           position="bottom-center"
           richColors
+          offset={72}
+          mobileOffset={32}
         />
       </body>
     </html>

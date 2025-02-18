@@ -120,6 +120,10 @@ export const usePostStore = create<PostStoreState & PostStoreActions>()(
           const error = await response.json()
           throw new Error(error.message || "Erro ao excluir post")
         }
+
+        set((state) => ({
+          posts: state.posts.filter((post) => post.id !== id),
+        }))
       },
 
       getPostBySlug: (slug: string) => {

@@ -43,8 +43,8 @@ export default function CriarPostPage() {
         setStatus("error")
         const errorMessageConst =
           error instanceof Error ? error.message : "Ocorreu um erro desconhecido."
-        setErrorMessage(errorMessageConst)
-        return `Erro: ${errorMessageConst}`
+        setErrorMessage(() => errorMessageConst)
+        return `Erro: ${errorMessage}`
       },
     })
   }

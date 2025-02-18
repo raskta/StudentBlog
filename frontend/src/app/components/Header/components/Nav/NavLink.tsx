@@ -17,7 +17,7 @@ export default function NavLink({ label, link, title }: NavLinkProps) {
     <Link
       href={link}
       title={title}
-      className={`${isActive ? "font-bold" : "font-normal"} text-main-dark-blue `}
+      className={`${isActive ? "font-bold" : "font-normal"} text-main-dark-blue font-title`}
     >
       {label}
     </Link>

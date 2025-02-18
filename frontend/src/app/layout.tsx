@@ -31,10 +31,20 @@ export default function RootLayout({
       lang="pt-br"
       className="bg-zinc-50"
     >
-      <body className={`${dmSans.variable} ${inter.variable} antialiased`}>
+      <body
+        className={`${dmSans.variable} ${inter.variable} container mx-auto px-8 antialiased md:px-0`}
+      >
         <Header />
-        {children}
-        <Toaster />
+        <div
+          data-id="layout-children"
+          className="py-6 md:py-16"
+        >
+          {children}
+        </div>
+        <Toaster
+          position="top-center"
+          richColors
+        />
       </body>
     </html>
   )

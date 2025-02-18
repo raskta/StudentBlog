@@ -37,20 +37,20 @@ export default function CriarPostPage() {
       loading: "Enviando...",
       success: () => {
         setStatus("success")
-        return `${data.titulo} foi criado com sucesso!`
+        return `"${data.titulo}" foi criado com sucesso!`
       },
       error: (error) => {
         setStatus("error")
         const errorMessageConst =
           error instanceof Error ? error.message : "Ocorreu um erro desconhecido."
         setErrorMessage(errorMessageConst)
-        return `Erro: ${errorMessage}`
+        return `Erro: ${errorMessageConst}`
       },
     })
   }
 
   return (
-    <main className="container mx-auto py-6 md:py-16">
+    <main>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="text-raisin-black mx-auto h-fit w-fit min-w-xl space-y-4 rounded-2xl bg-white p-6 shadow"

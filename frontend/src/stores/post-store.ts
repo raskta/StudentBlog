@@ -21,6 +21,7 @@ interface PostStoreState {
 interface PostStoreActions {
   fetchPosts: () => Promise<void>
   createPost: (formData: Inputs) => Promise<void>
+  deletePost: (id: number) => Promise<void>
   getPostBySlug: (slug: string) => Post | undefined
   setSearchTerm: (term: string) => void
   resetStatus: () => void
@@ -106,6 +107,18 @@ export const usePostStore = create<PostStoreState & PostStoreActions>()(
         if (!response.ok) {
           const error = await response.json()
           throw new Error(error.message || "Erro ao criar o post")
+        }
+      },
+
+      deletePost: async (id: number): Promise<void> => {
+        const response = await fetch(`http://localhost:3000/posts/${id}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        })
+
+        if (!response.ok) {
+          const error = await response.json()
+          throw new Error(error.message || "Erro ao excluir post")
         }
       },
 

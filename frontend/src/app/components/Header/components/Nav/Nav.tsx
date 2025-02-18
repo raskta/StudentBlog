@@ -38,7 +38,7 @@ export default function Nav() {
         <li>
           <Link
             href={"/login"}
-            className="flex cursor-pointer items-center gap-1.5 rounded-full bg-zinc-300 px-2 py-1 transition-colors hover:bg-blue-300"
+            className="font-title flex cursor-pointer items-center gap-1.5 rounded-full bg-zinc-300 px-2 py-1 transition-colors hover:bg-blue-300"
           >
             <LogInIcon
               width={16}

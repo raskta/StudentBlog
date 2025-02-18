@@ -26,6 +26,11 @@
   h6 {
     font-family: var(--font-title);
   }
+
+  body,
+  p {
+    font-weight: 400;
+  }
 }
 
 @utility container {

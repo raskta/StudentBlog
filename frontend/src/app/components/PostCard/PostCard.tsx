@@ -16,7 +16,7 @@ export default function PostCard({
   const dataFormatada = data.format("DD [de] MMMM [de] YYYY")
 
   return (
-    <div className="block w-xs rounded-3xl md:h-96 md:w-full">
+    <div className="block h-fit min-h-96 w-xs rounded-3xl md:w-full">
       <Link
         href={`/posts/${tituloslug}`}
         className="group/card relative"
@@ -27,8 +27,7 @@ export default function PostCard({
             src={urlimagem}
             width={392}
             height={207}
-            objectFit="cover"
-            className="w-full rounded-3xl"
+            className="h-64 w-full rounded-3xl object-cover"
             alt={`Imagem que representa a postagem ${titulo}`}
           />
         ) : (

@@ -37,7 +37,7 @@ export default function RootLayout({
         <Header />
         <div
           data-id="layout-children"
-          className="py-6 md:py-16"
+          className="py-6 md:py-12"
         >
           {children}
         </div>

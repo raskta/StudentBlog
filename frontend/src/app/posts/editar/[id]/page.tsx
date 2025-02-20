@@ -18,7 +18,6 @@ export default function EditarPostPage({ params }: { params: Promise<{ id: strin
   const [foundPost, setFoundPost] = useState<Post | undefined>(undefined)
 
   const getPostById = usePostStore((state) => state.getPostById)
-  const fetchPosts = usePostStore((state) => state.fetchPosts)
   const updatePost = usePostStore((state) => state.updatePost)
 
   useEffect(() => {
@@ -45,13 +44,9 @@ export default function EditarPostPage({ params }: { params: Promise<{ id: strin
       try {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { tituloslug, ...dataWithoutSlug } = data
-        await updatePost(postId, dataWithoutSlug)
+        const updatedPost = await updatePost(postId, dataWithoutSlug)
 
-        // Aguarda a atualização dos posts
-        await fetchPosts()
-
-        // Insere os novos dados do post atualizado no form
-        const updatedPost = getPostById(postId)
+        // Atualiza o estado local e reseta o formulário
         setFoundPost(updatedPost)
         form.reset(updatedPost)
 

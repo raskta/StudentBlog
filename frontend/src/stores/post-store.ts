@@ -22,7 +22,7 @@ interface PostStoreActions {
   fetchPosts: () => Promise<void>
   createPost: (formData: Inputs) => Promise<void>
   deletePost: (id: number) => Promise<void>
-  updatePost: (id: number, data: Post) => Promise<void>
+  updatePost: (id: number, data: Post) => Promise<Post>
   getPostBySlug: (slug: string) => Post | undefined
   getPostById: (id: number) => Post | undefined
   setSearchTerm: (term: string) => void
@@ -110,6 +110,13 @@ export const usePostStore = create<PostStoreState & PostStoreActions>()(
           const error = await response.json()
           throw new Error(error.message || "Erro ao criar o post")
         }
+
+        // Captura o post criado retornado pelo backend
+        const createdPost = await response.json()
+
+        set((state) => ({
+          posts: [...state.posts, createdPost],
+        }))
       },
 
       deletePost: async (id: number): Promise<void> => {
@@ -139,6 +146,14 @@ export const usePostStore = create<PostStoreState & PostStoreActions>()(
           const error = await response.json()
           throw new Error(error.message || `Erro ao editar post: ${id} - ${data.titulo}`)
         }
+
+        const updatedPost: Post = await response.json()
+
+        set((state) => ({
+          posts: state.posts.map((post) => (post.id === id ? updatedPost : post)),
+        }))
+
+        return updatedPost
       },
 
       getPostBySlug: (slug: string) => {

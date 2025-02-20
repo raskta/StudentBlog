@@ -14,9 +14,9 @@ export default function GerenciamentoPage() {
         <Link
           href="/posts/criar"
           title="Ir para a página de criação de Post"
-          className="rounded-full bg-blue-200 px-4 py-2 transition-colors hover:bg-blue-300/80 active:bg-blue-300"
+          className="rounded-full bg-blue-200 px-4 py-2 font-normal text-black transition-colors hover:bg-blue-300/80 active:bg-blue-300"
         >
-          Novo Post
+          Criar Post
         </Link>
       </section>
       <section

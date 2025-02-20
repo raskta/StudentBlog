@@ -4,30 +4,68 @@ import { FormField } from "@/app/components/CustomForm/components/FormField/Form
 import { CustomForm } from "@/app/components/CustomForm/CustomForm"
 import { Post } from "@/interfaces/post"
 import { usePostStore } from "@/stores/post-store"
+import { ArrowLeft } from "lucide-react"
+import Link from "next/link"
 import { use, useEffect, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
+import { toast } from "sonner"
 
 export default function EditarPostPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params) // Usa `use()` para resolver a Promise
-  const postId = Number(id) // Converte ID para número
+  const { id } = use(params)
+  const postId = Number(id)
   const form = useForm<Post>()
+  const [status, setStatus] = useState<"idle" | "pending" | "success" | "error">("idle")
+  const [foundPost, setFoundPost] = useState<Post | undefined>(undefined)
 
   const getPostById = usePostStore((state) => state.getPostById)
-  const [foundPost, setFoundPost] = useState<Post | undefined>(undefined)
+  const updatePost = usePostStore((state) => state.updatePost)
 
   useEffect(() => {
     if (postId) {
       const post = getPostById(postId)
       setFoundPost(post)
+      if (post) {
+        form.reset(post) // Reset form with post data when loaded
+      }
     }
-  }, [postId, getPostById])
+  }, [postId, getPostById, form])
+
+  const hasChangedFields = (postData: Partial<Post>) => {
+    if (!foundPost) return false
+
+    const editableFields: (keyof Post)[] = ["titulo", "subtitulo", "conteudo", "urlimagem"]
+    return editableFields.some((field) => postData[field] !== foundPost[field])
+  }
 
   const onSubmit: SubmitHandler<Post> = async (data) => {
-    console.log(data)
+    if (hasChangedFields(data)) {
+      setStatus("pending")
+
+      try {
+        await updatePost(postId, { ...data })
+        setStatus("success")
+        toast.success(`"${data.titulo}" alterado com sucesso`)
+      } catch (error) {
+        setStatus("error")
+        toast.error(error instanceof Error ? error.message : "Erro desconhecido")
+      }
+    } else {
+      toast.warning("Nenhum campo foi alterado, por favor altere algo e tente novamente", {
+        closeButton: true,
+      })
+    }
   }
 
   return (
     <main className="mx-auto max-w-2xl p-4">
+      <Link
+        className="hover:text-main-dark-blue mb-6 flex items-center gap-0.5 text-sm text-zinc-500 transition-colors"
+        href={"/gerenciamento"}
+        title="Voltar para a página anterior"
+      >
+        <ArrowLeft size={16} />
+        Voltar
+      </Link>
       {foundPost ? (
         <CustomForm
           form={form}
@@ -71,6 +109,13 @@ export default function EditarPostPage({ params }: { params: Promise<{ id: strin
             accept="image/*"
             className="mb-6"
           />
+          <button
+            type="submit"
+            title="Salvar alterações"
+            className="w-full cursor-pointer rounded-lg bg-blue-100 p-3 font-medium transition-colors hover:bg-blue-200"
+          >
+            {status === "pending" ? "Enviando..." : "Salvar alterações"}
+          </button>
         </CustomForm>
       ) : (
         <p>Post não encontrado...</p>

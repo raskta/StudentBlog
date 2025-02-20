@@ -93,7 +93,8 @@ export default function CriarPostPage() {
         ) : (
           <button
             type="submit"
-            className="w-full rounded-lg bg-blue-100 p-3 font-medium transition-colors hover:bg-blue-200"
+            title="Criar post"
+            className="w-full cursor-pointer rounded-lg bg-blue-100 p-3 font-medium transition-colors hover:bg-blue-200"
             disabled={status === "pending"}
           >
             {status === "pending" ? "Enviando..." : "Criar Post"}

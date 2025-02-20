@@ -130,7 +130,7 @@ export const usePostStore = create<PostStoreState & PostStoreActions>()(
 
       updatePost: async (id: number, data: Post) => {
         const response = await fetch(`http://localhost:3000/posts/${id}`, {
-          method: "PATCH",
+          method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         })

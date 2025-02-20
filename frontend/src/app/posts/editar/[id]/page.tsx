@@ -18,6 +18,7 @@ export default function EditarPostPage({ params }: { params: Promise<{ id: strin
   const [foundPost, setFoundPost] = useState<Post | undefined>(undefined)
 
   const getPostById = usePostStore((state) => state.getPostById)
+  const fetchPosts = usePostStore((state) => state.fetchPosts)
   const updatePost = usePostStore((state) => state.updatePost)
 
   useEffect(() => {
@@ -37,14 +38,25 @@ export default function EditarPostPage({ params }: { params: Promise<{ id: strin
     return editableFields.some((field) => postData[field] !== foundPost[field])
   }
 
-  const onSubmit: SubmitHandler<Post> = async (data) => {
+  const onSubmit: SubmitHandler<Post> = async (data: Post) => {
     if (hasChangedFields(data)) {
       setStatus("pending")
 
       try {
-        await updatePost(postId, { ...data })
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { tituloslug, ...dataWithoutSlug } = data
+        await updatePost(postId, dataWithoutSlug)
+
+        // Aguarda a atualização dos posts
+        await fetchPosts()
+
+        // Insere os novos dados do post atualizado no form
+        const updatedPost = getPostById(postId)
+        setFoundPost(updatedPost)
+        form.reset(updatedPost)
+
         setStatus("success")
-        toast.success(`"${data.titulo}" alterado com sucesso`)
+        toast.success(`"${dataWithoutSlug.titulo}" alterado com sucesso`)
       } catch (error) {
         setStatus("error")
         toast.error(error instanceof Error ? error.message : "Erro desconhecido")
@@ -103,7 +115,7 @@ export default function EditarPostPage({ params }: { params: Promise<{ id: strin
             placeholder="Insira o conteúdo completo"
           />
           <FormField
-            id="imagem"
+            id="urlimagem"
             label="Imagem"
             type="file"
             accept="image/*"

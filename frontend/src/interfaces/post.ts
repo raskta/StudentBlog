@@ -10,5 +10,5 @@ export interface Post {
   dtalteracao: Date
   usuario: User
   usuarioAlteracao: User
-  tituloslug: string
+  tituloslug?: string
 }

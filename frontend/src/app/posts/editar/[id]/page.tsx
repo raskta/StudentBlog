@@ -66,7 +66,7 @@ export default function EditarPostPage({ params }: { params: Promise<{ id: strin
   return (
     <main className="mx-auto max-w-2xl p-4">
       <Link
-        className="hover:text-main-dark-blue mb-6 flex items-center gap-0.5 text-sm text-zinc-500 transition-colors"
+        className="hover:text-main-dark-blue mb-6 flex w-fit items-center gap-0.5 text-sm text-zinc-500 transition-colors"
         href={"/gerenciamento"}
         title="Voltar para a página anterior"
       >

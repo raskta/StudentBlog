@@ -31,4 +31,4 @@ COPY --from=builder /app/.next ./.next
 
 EXPOSE 3001
 
-CMD ["npx", "next", "start"]
+CMD ["npm", "run", "start"]

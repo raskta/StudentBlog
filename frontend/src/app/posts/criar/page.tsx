@@ -8,6 +8,7 @@ import Link from "next/link"
 import { HomeIcon } from "lucide-react"
 import { CustomForm } from "@/app/components/CustomForm/CustomForm"
 import { FormField } from "@/app/components/CustomForm/components/FormField/FormField"
+import FormButton from "@/app/components/CustomForm/components/FormButton/FormButton"
 
 export type Inputs = {
   titulo: string
@@ -91,14 +92,13 @@ export default function CriarPostPage() {
             />
           </Link>
         ) : (
-          <button
+          <FormButton
             type="submit"
             title="Criar post"
-            className="w-full cursor-pointer rounded-lg bg-blue-100 p-3 font-medium transition-colors hover:bg-blue-200"
             disabled={status === "pending"}
           >
             {status === "pending" ? "Enviando..." : "Criar Post"}
-          </button>
+          </FormButton>
         )}
       </CustomForm>
     </main>

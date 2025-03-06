@@ -1,6 +1,7 @@
 "use client"
 
 import { FormField } from "@/app/components/CustomForm/components/FormField/FormField"
+import FormButton from "@/app/components/CustomForm/components/FormButton/FormButton"
 import { CustomForm } from "@/app/components/CustomForm/CustomForm"
 import { Post } from "@/interfaces/post"
 import { usePostStore } from "@/stores/post-store"
@@ -116,13 +117,12 @@ export default function EditarPostPage({ params }: { params: Promise<{ id: strin
             accept="image/*"
             className="mb-6"
           />
-          <button
+          <FormButton
             type="submit"
             title="Salvar alterações"
-            className="w-full cursor-pointer rounded-lg bg-blue-100 p-3 font-medium transition-colors hover:bg-blue-200"
           >
             {status === "pending" ? "Enviando..." : "Salvar alterações"}
-          </button>
+          </FormButton>
         </CustomForm>
       ) : (
         <p>Post não encontrado...</p>

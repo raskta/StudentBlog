@@ -12,7 +12,9 @@
     "@hookform/resolvers": "4.0.0",
     "@tailwindcss/postcss": "4.0.1",
     "@tanstack/react-query": "5.66.0",
+    "bcrypt": "5.1.1",
     "dayjs": "1.11.13",
+    "jsonwebtoken": "9.0.2",
     "lodash.kebabcase": "4.1.1",
     "lucide-react": "0.474.0",
     "next": "15.1.7",
@@ -26,6 +28,8 @@
   "devDependencies": {
     "@eslint/eslintrc": "3",
     "@tanstack/eslint-plugin-query": "5.66.0",
+    "@types/bcrypt": "5.0.2",
+    "@types/jsonwebtoken": "9.0.9",
     "@types/lodash.kebabcase": "4.1.9",
     "@types/node": "20",
     "@types/react": "18",

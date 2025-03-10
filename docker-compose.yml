@@ -7,6 +7,8 @@ services:
       - "${APP_PORT}:3000"
     environment:
       DATABASE_URL: "postgresql://${DB_USER}:${DB_PASSWORD}@database:5432/${DB_DATABASE}"
+    env_file:
+      - .env
     depends_on:
       - database
 
@@ -29,6 +31,10 @@ services:
       - "${FRONTEND_PORT}:3001"
     depends_on:
       - app
+    environment:
+      NEXT_PUBLIC_API_URL: "http://app:3000"
+    env_file:
+      - .env
 
 volumes:
   pgdata:

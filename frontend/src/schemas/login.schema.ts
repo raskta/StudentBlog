@@ -2,15 +2,15 @@
 import * as yup from "yup"
 
 export const loginSchema = yup.object().shape({
-  username: yup
+  email: yup
     .string()
-    .required("Usuário é obrigatório")
+    .required("Email é obrigatório")
     .min(3, "Usuário deve ter pelo menos 3 caracteres")
     .max(20, "Usuário não pode ultrapassar 20 caracteres"),
   password: yup
     .string()
     .required("Senha é obrigatória")
-    .min(3, "Senha deve ter no mínimo 3 caracteres")
+    .min(1, "Senha deve ter no mínimo 3 caracteres")
     .max(50, "Senha não pode ultrapassar 50 caracteres"),
 })
 

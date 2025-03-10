@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc --build",
-    "dev": "ts-node-dev --respawn --env-file .env src/app.ts",
-    "seed": "ts-node-dev --env-file .env src/utils/seeds/seeds.ts",
+    "dev": "ts-node-dev --respawn --env-file ../.env src/app.ts",
+    "seed": "ts-node-dev --env-file ../.env src/shared/seeds/seeds.ts",
     "test": "jest --passWithNoTests --coverage",
     "start": "npm run build && node dist/app.js",
-    "start-local" : "npm run build && node --env-file .env dist/app.js",
+    "start-local": "npm run build && node --env-file .env dist/app.js",
     "docker-build": "docker-compose build --no-cache",
     "docker": "docker-compose up && docker image prune -f",
     "docker-rebuild": "npm run docker-build && npm run docker"
@@ -18,9 +18,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/pg": "^8.11.10",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.7",
@@ -30,9 +32,11 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.1",
     "reflect-metadata": "^0.2.2",
     "swagger-jsdoc": "^6.2.8",

@@ -18,7 +18,7 @@ export default function PostCard({
   return (
     <div className="block h-fit min-h-96 w-xs rounded-3xl md:w-full">
       <Link
-        href={`/posts/${tituloslug}`}
+        href={`/post/${tituloslug}`}
         className="group/card relative"
         title={`Ver postagem: ${titulo}`}
       >

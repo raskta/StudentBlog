@@ -6,6 +6,7 @@ import { use, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import dayjs from "dayjs"
 import Image from "next/image"
+import notFound from "@/app/not-found"
 
 export default function PostDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params) // Correção: recebe params diretamente
@@ -38,7 +39,7 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
   }
 
   if (!post) {
-    ;<p>Postagem não encontrada...</p>
+    return notFound()
   }
 
   const data = dayjs(post?.dtcriacao)

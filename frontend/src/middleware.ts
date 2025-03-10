@@ -1,104 +1,42 @@
 import { NextResponse, type NextRequest } from "next/server"
-import jwt from "jsonwebtoken"
+import { cookies } from "next/headers"
+import { decrypt } from "./app/lib/authSession"
 
-const privateRoutes = ["/gerenciamento"]
-const authRoutes = ["/login"]
-const PUBLIC_FILE = /\.(.*)$/
-const DEFAULT_REDIRECT = "/gerenciamento"
-const AUTH_COOKIE = "auth_token"
+const AUTH_COOKIE = "session"
+const protectedRoutes = ["/gerenciamento", "/posts"]
+const authRoute = ["/login"]
 
-export async function middleware(request: NextRequest) {
-  const { pathname, searchParams } = request.nextUrl
-  const token = request.cookies.get("auth_token")?.value
+export async function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl
+  const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route))
+  const isAuthRoute = authRoute.some((route) => pathname.startsWith(route))
 
-  // Ignorar arquivos públicos e rotas da API
-  if (shouldSkipMiddleware(pathname)) {
-    return NextResponse.next()
+  const cookieStore = await cookies()
+  const cookie = cookieStore.get(AUTH_COOKIE)?.value
+
+  let session
+  try {
+    if (cookie) {
+      session = await decrypt(cookie)
+    }
+  } catch (error) {
+    console.error("Falha ao descriptografar sessão:", error)
+    return NextResponse.redirect(new URL("/login", req.nextUrl))
   }
 
-  // Verificar rotas privadas primeiro
-  if (isPrivateRoute(pathname)) {
-    return handlePrivateRoute(request, token, pathname)
+  if (isProtectedRoute && !session?.userId) {
+    return NextResponse.redirect(new URL("/login", req.nextUrl))
   }
 
-  // Verificar rotas de autenticação
-  if (isAuthRoute(pathname)) {
-    return handleAuthRoute(request, token, searchParams)
+  if (isAuthRoute && session?.userId) {
+    return NextResponse.redirect(new URL("/gerenciamento", req.nextUrl))
   }
 
   return NextResponse.next()
 }
 
-// Helper functions
-function shouldSkipMiddleware(pathname: string): boolean {
-  return pathname.startsWith("/_next") || pathname.includes("/api/") || PUBLIC_FILE.test(pathname)
-}
-
-function isPrivateRoute(pathname: string): boolean {
-  return privateRoutes.some((route) => pathname === route || pathname.startsWith(`${route}/`))
-}
-
-function isAuthRoute(pathname: string): boolean {
-  return authRoutes.includes(pathname)
-}
-
-async function handlePrivateRoute(
-  request: NextRequest,
-  token: string | undefined,
-  pathname: string,
-) {
-  try {
-    if (!token) throw new Error("Acesso não autorizado")
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { exp: number }
-
-    // Verificar expiração do token
-    if (Date.now() >= decoded.exp * 1000) {
-      throw new Error("Sessão expirada")
-    }
-
-    return NextResponse.next()
-  } catch (error) {
-    console.error(`Erro na rota privada [${pathname}]:`, error)
-
-    const loginUrl = new URL("/login", request.url)
-    loginUrl.searchParams.set("redirect", pathname)
-
-    // Limpar cookie inválido
-    const response = NextResponse.redirect(loginUrl)
-    response.cookies.delete(AUTH_COOKIE)
-
-    return response
-  }
-}
-
-async function handleAuthRoute(
-  request: NextRequest,
-  token: string | undefined,
-  searchParams: URLSearchParams,
-) {
-  try {
-    // Se não tem token, permite acesso à rota de login
-    if (!token) return NextResponse.next()
-
-    // Verificar token válido
-    jwt.verify(token, process.env.JWT_SECRET!)
-
-    // Redirecionar para URL válida
-    const redirectPath = validateRedirectPath(searchParams.get("redirect") || DEFAULT_REDIRECT)
-
-    return NextResponse.redirect(new URL(redirectPath, request.url))
-  } catch (error) {
-    // Se token é inválido, limpar e permitir login
-    console.error("Erro na rota de autenticação:", error)
-    const response = NextResponse.next()
-    response.cookies.delete(AUTH_COOKIE)
-    return response
-  }
-}
-
-function validateRedirectPath(path: string): string {
-  // Garantir que o redirecionamento é para uma rota permitida
-  const isValid = privateRoutes.some((route) => path.startsWith(route))
-  return isValid ? path : DEFAULT_REDIRECT
+export const config = {
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
 }

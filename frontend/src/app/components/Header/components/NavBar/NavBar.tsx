@@ -1,15 +1,24 @@
-import NavLink from "./NavLink"
-import Link from "next/link"
+"use client"
 
-type Link = {
-  label: string
-  link: string
-  title: string
-}
+import { useAuthStore } from "@/stores/auth"
+import NavLink from "./NavLink"
+import { LogOutIcon } from "lucide-react"
+import { toast } from "sonner"
 
 export default function Nav() {
-  // TODO: limitar algumas rotas para somente usuários logados
-  const links: Link[] = [
+  const { isAuthenticated, setIsAuthenticated } = useAuthStore()
+
+  const endSession = async () => {
+    try {
+      await fetch("/api/logout", { method: "POST", credentials: "include" })
+      setIsAuthenticated(false)
+      window.location.href = "/login"
+    } catch (error) {
+      console.error("Erro ao encerrar sessão:", error)
+    }
+  }
+
+  const links = [
     {
       label: "Início",
       link: "/",
@@ -30,22 +39,28 @@ export default function Nav() {
             <NavLink
               label={item.label}
               link={item.link}
-              title={item.link}
+              title={item.title}
             />
           </li>
         ))}
-        {/* <li>
-          <Link
-            href={"/login"}
-            className="font-title flex cursor-pointer items-center gap-1.5 rounded-full bg-zinc-300 px-2 py-1 transition-colors hover:bg-blue-300"
-          >
-            <LogInIcon
-              width={16}
-              height={16}
-            />
-            Entrar
-          </Link>
-        </li> */}
+        {isAuthenticated && (
+          <li>
+            <button
+              onClick={() => {
+                endSession()
+                toast.info("Você saiu da conta com sucesso", { closeButton: true })
+              }}
+              type="button"
+              title="Sair da conta"
+              className="cursor-pointer rounded-full bg-red-200 p-2 transition-colors hover:bg-red-300 active:bg-red-400"
+            >
+              <LogOutIcon
+                size={20}
+                className="text-raisin-black"
+              />
+            </button>
+          </li>
+        )}
       </ul>
     </nav>
   )

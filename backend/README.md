@@ -12,8 +12,6 @@ Sobre o desafio: "_Desenvolver uma API para uma aplicação de blogging dinâmic
 - Vinicius Wrubleski - RM359675
 - Vitor Bassani - RM358848
 
-##
-
 ### 💻 Tecnologias Utilizadas
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -33,7 +31,7 @@ Sobre o desafio: "_Desenvolver uma API para uma aplicação de blogging dinâmic
 
 ##
 
-### ✔ Arquiterura
+### ✔ Arquitetura
 
 A Api foi desenvolvida na arquitetura REST com princípios de modularização e separação de responsabilidades.
 

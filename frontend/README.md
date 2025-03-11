@@ -1,15 +1,22 @@
 # Blog Application Front-End
+👋 Bem-vindo(a)
 
-Aplicação front-end construída utilizando:
+## Integrantes
 
-![Next.js](https://img.shields.io/badge/Next.js-15.1.7-black)
-![React](https://img.shields.io/badge/React-18.2-%2361DAFB)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0-%233178C6)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-%2338B2AC)
-![React Hook Form](https://img.shields.io/badge/React_Hook_Form-7.54.2-%234f46e5)
-![Zustand](https://img.shields.io/badge/Zustand-5.0.3-%23d1d5db)
+- Gabriel Nascimento - RM359635
+- Rodrigo Souza - RM359534
+- Stella Yano - RM359726
+- Vinicius Wrubleski - RM359675
+- Vitor Bassani - RM358848
 
-## Tech Stack Principal
+## 🧑‍💻 Tech Stack Principal
+
+[![Next.js](https://img.shields.io/badge/Next.js-15.1.7-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-18.2-%2361DAFB?style=for-the-badge&logo=react&logoColor=white)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-%233178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-%2338B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![React Hook Form](https://img.shields.io/badge/React_Hook_Form-7.54.2-%234f46e5?style=for-the-badge&logo=react-hook-form&logoColor=white)](https://react-hook-form.com/)
+[![Zustand](https://img.shields.io/badge/Zustand-5.0.3-%23d1d5db?style=for-the-badge&logo=zustand&logoColor=black)](https://zustand-demo.pmnd.rs/)
 
 | Categoria            | Tecnologias                                                                  |
 |----------------------|-----------------------------------------------------------------------------|
@@ -21,7 +28,7 @@ Aplicação front-end construída utilizando:
 | **Icones**           | Lucide React                                                                |
 | **Notificações**     | Sonner              
 
-## 🚀 Setup Initial
+## 🚀 Setup
 
 ### Pré-requisitos
 - Node.js v18+
@@ -54,7 +61,7 @@ Aplicação front-end construída utilizando:
    docker compose up
    ```
 
-## Guia de uso
+## 🚸 Guia de uso
 
 ### Página inicial
 Na página inicial, é apresentado todos os posts cadastrados, onde qualquer usuário pode acessar, seja autenticado ou não, podendo também acessar a página de detalhamento do post ao clicar sobre o card da postagem.
@@ -73,7 +80,30 @@ Nessa página de gerenciamento, é apresentado um botão para criar novas postag
 ### Página de Login
 Formulário para realizar login, onde o campo de usuário é o <b>Email do usuário</b> e a senha é o <b>id do usuário</b> que seria informado pela equipe de sistema
 
-Caso você tenha realizado o procedimento de população da aplicação, usando o npm run seed do backend, acesso utilizando: 
+Caso você tenha realizado o procedimento de população da aplicação, usando o npm run seed do backend, acesse utilizando: 
 
 - email: email1@gmail.com 
 - senha: 1
+
+## Guia para desenvolvimento
+
+Para entrar no ambiente de desenvolvimento para a aplicação FrontEnd, é necessário que você suba via Docker o Banco de dados e o BackEnd da aplicação do Student Blog
+
+### Setup desenvolvimento
+
+1. Clone o repositório:
+   ```bash
+    git clone https://github.com/EduSphereGroup/StudentBlog
+   ```
+2. Suba via docker o Banco de dados e o Back-end
+   ```bash
+    docker compose up database app --build
+   ```
+3. Inicie o Frontend em modo de desenvolvimento
+   ```bash
+    cd frontend
+
+    npm install
+
+    npm run dev
+   ```

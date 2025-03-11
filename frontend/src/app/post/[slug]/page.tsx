@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import dayjs from "dayjs"
 import Image from "next/image"
 import notFound from "@/app/not-found"
+import Link from "next/link"
 
 export default function PostDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params) // Correção: recebe params diretamente
@@ -47,6 +48,14 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
 
   return (
     <main>
+      <div className="flex justify-end p-4">
+        <Link
+          href="/"
+          className="text-main-dark-blue font-normal hover:underline"
+        >
+          ← Voltar
+        </Link>
+      </div>
       <article>
         <section className="mx-auto max-w-xs space-y-6 text-center md:max-w-2xl">
           <div className="flex items-center justify-center gap-4 text-sm font-medium">

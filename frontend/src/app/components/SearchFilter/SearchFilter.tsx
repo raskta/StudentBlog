@@ -22,7 +22,7 @@ export default function SearchFilter() {
   return (
     <section
       id="filter"
-      className="mx-auto mb-6 flex w-xs items-center gap-1 rounded-full bg-blue-200 px-4 py-2 lg:mx-0"
+      className="mx-auto mb-6 flex w-xs items-center gap-1 rounded-full bg-gray-200 px-4 py-2 lg:mx-0"
     >
       <input
         ref={inputRef}

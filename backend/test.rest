@@ -62,7 +62,7 @@ Content-Type: application/json
 {
   "nome": "Fulano",
   "email": "email@gmail.com",
-  "role": "Aluno",
+  "role": "Professor",
   "ativo": true
 }
 

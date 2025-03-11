@@ -18,7 +18,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Blog | EduSphere",
-  description: "",
+  description: "Um blog educacional com conteúdos diversos.",
 }
 
 export default function RootLayout({

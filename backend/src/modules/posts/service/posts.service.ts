@@ -32,7 +32,7 @@ class PostService {
 
     if (!post.titulo || !post.conteudo) {
       throw new CustomError("Título e conteúdo são obrigatórios", 400);
-    }
+    }    
 
     const newPost = await postCreate({ ...post, usuario: userData });
     return newPost;

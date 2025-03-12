@@ -10,7 +10,7 @@ import { toast } from "sonner"
 import { useAuthStore } from "@/stores/auth"
 
 export default function LoginPage() {
-  const { setIsAuthenticated } = useAuthStore()
+  const { setIsAuthenticated, setUserId } = useAuthStore()
 
   const form = useForm<LoginFormData>({
     resolver: yupResolver(loginSchema),
@@ -30,16 +30,26 @@ export default function LoginPage() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
+          credentials: "include",
         })
 
-        const responseData = await response.json()
-
         if (!response.ok) {
+          const responseData = await response.json()
           reject(new Error(responseData.message || "Erro na autenticação"))
           return
         }
 
+        const sessionResponse = await fetch("/api/login", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        })
+
+        const sessionData = await sessionResponse.json()
+
         setIsAuthenticated(true)
+        setUserId(sessionData.userId)
+
         resolve()
       } catch (err) {
         reject(err)
@@ -66,7 +76,7 @@ export default function LoginPage() {
         <h1 className="text-main-dark-blue mb-6 text-2xl font-semibold">Login</h1>
         <FormField
           id="email"
-          label="Email do usuário"
+          label="E-mail"
           validation={{ required: "Email é obrigatório" }}
           placeholder="Insira o email"
         />

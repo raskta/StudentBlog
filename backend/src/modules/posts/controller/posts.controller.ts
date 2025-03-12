@@ -315,9 +315,14 @@ class PostController {
    */
   async create(req: Request, res: Response, next: NextFunction) {
     try {
+      
       const { idusuario } = req.body;
       if (!idusuario) {
         return res.status(400).json({ message: "idusuario é obrigatório" });
+      }
+      if (req.body.imagem && !req.body.urlimagem) {
+        req.body.urlimagem = req.body.imagem;
+        delete req.body.imagem;
       }
       const result = await postService.create(req.body);
       res.status(200).json(result);

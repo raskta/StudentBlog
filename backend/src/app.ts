@@ -21,6 +21,9 @@ app.use(
   })
 );
 
+// permitir acessar as imagens do servidor
+app.use("/uploads", express.static("uploads"));
+
 // Configuração do Swagger
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
@@ -40,20 +43,3 @@ try {
 } catch (error) {
   console.error("Server failed to start:", error);
 }
-
-//DONE:: Add tests,
-//TODO:: configurar Swagger,
-//TODO:: configurar Docker,
-//TODO:: configurar CI/CD,
-//TODO:: configurar logs,
-//TODO:: configurar autenticação,
-//TODO:: configurar autorização,
-//TODO:: configurar cache,
-//TODO:: configurar monitoramento,
-//TODO:: configurar rate limit,
-//TODO:: configurar cors,
-//TODO:: configurar logs,
-//TODO:: configurar internacionalização,
-//TODO:: configurar validação de dados,
-//TODO:: configurar documentação,
-//TODO:: configurar segurança

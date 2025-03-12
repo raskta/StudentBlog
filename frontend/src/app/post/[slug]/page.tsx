@@ -46,6 +46,9 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
   const data = dayjs(post?.dtcriacao)
   const dataFormatada = data.format("DD [de] MMMM [de] YYYY")
 
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+  const imageUrl = post.urlimagem?.startsWith("/uploads") ? `${baseUrl}${post.urlimagem}` : post.urlimagem;
+
   return (
     <main>
       <div className="flex justify-end p-4">
@@ -74,17 +77,22 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
             <p className="font-normal">{post?.subtitulo}</p>
           </div>
         </section>
-        {post?.urlimagem && (
+         {}
+         <div className="flex justify-center pt-4">
           <Image
-            src={post.urlimagem}
+            src={
+              imageUrl ||
+              "https://s.france24.com/media/display/e6279b3c-db08-11ee-b7f5-005056bf30b7/w:1280/p:16x9/news_en_1920x1080.jpg"
+            }
             width={512}
             height={306}
-            className="mx-auto h-fit object-cover pt-4"
-            alt={`Imagem que representa postagem ${post?.titulo}`}
+            className="h-auto max-h-96 w-auto max-w-full object-cover rounded-lg"
+            alt={`Imagem que representa postagem ${post.titulo}`}
+            unoptimized // 🔥 Importante para evitar restrições do Next.js com imagens externas
           />
-        )}
+        </div>
         <section className="mx-auto max-w-xs pt-4 md:max-w-2xl lg:max-w-4xl lg:pt-12 2xl:max-w-5xl">
-          <p className="leading-7 font-light">{post?.conteudo}</p>
+          <p className="leading-7 font-light">{post.conteudo}</p>
         </section>
       </article>
     </main>

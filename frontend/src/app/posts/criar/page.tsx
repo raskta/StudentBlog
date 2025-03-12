@@ -1,47 +1,99 @@
-"use client"
+"use client";
 
-import { SubmitHandler, useForm } from "react-hook-form"
-import { toast } from "sonner"
-import { useState } from "react"
-import { usePostStore } from "@/stores/post-store"
-import Link from "next/link"
-import { HomeIcon } from "lucide-react"
-import { CustomForm } from "@/app/components/CustomForm/CustomForm"
-import { FormField } from "@/app/components/CustomForm/components/FormField/FormField"
-import FormButton from "@/app/components/CustomForm/components/FormButton/FormButton"
+import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { useState } from "react";
+import { usePostStore } from "@/stores/post-store";
+import { useAuthStore } from "@/stores/auth";
+import Link from "next/link";
+import { HomeIcon, ArrowLeft } from "lucide-react";
+import { CustomForm } from "@/app/components/CustomForm/CustomForm";
+import { FormField } from "@/app/components/CustomForm/components/FormField/FormField";
+import FormButton from "@/app/components/CustomForm/components/FormButton/FormButton";
 
 export type Inputs = {
-  titulo: string
-  subtitulo: string
-  conteudo: string
-  imagem: FileList
-  idusuario: number
-}
+  titulo: string;
+  subtitulo: string;
+  conteudo: string;
+  imagem: FileList | string;
+  idusuario: string;
+};
 
 export default function CriarPostPage() {
-  const form = useForm<Inputs>()
-  const createPost = usePostStore((state) => state.createPost)
-  const [status, setStatus] = useState<"idle" | "pending" | "success" | "error">("idle")
+  const form = useForm<Inputs>();
+  const createPost = usePostStore((state) => state.createPost);
+  const userId = useAuthStore((state) => state.userId);
+  const [status, setStatus] = useState<"idle" | "pending" | "success" | "error">("idle");
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    setStatus("pending")
+  // Função para fazer upload da imagem
+  const uploadImage = async (file: File): Promise<string | null> => {
+    const formData = new FormData();
+    formData.append("file", file);
 
     try {
-      await createPost({ ...data, idusuario: 1 })
-      setStatus("success")
-      toast.success(`"${data.titulo}" foi criado com sucesso!`)
+      const response = await fetch("/api/uploadImage", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Erro no upload da imagem");
+      }
+
+      return data.url;
     } catch (error) {
-      setStatus("error")
-      toast.error(error instanceof Error ? error.message : "Erro desconhecido")
+      console.error("Erro ao fazer upload da imagem:", error);
+      toast.error("Erro ao fazer upload da imagem.");
+      return null;
     }
-  }
+  };
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    if (!userId) {
+      toast.error("Erro: Usuário não autenticado.");
+      return;
+    }
+
+    setStatus("pending");
+
+    try {
+      let imageUrl = "";
+
+      if (data.imagem.length > 0) {
+        const file = data.imagem[0] as File;
+        imageUrl = await uploadImage(file) ?? "";
+      }
+
+      await createPost({
+        titulo: data.titulo,
+        subtitulo: data.subtitulo,
+        conteudo: data.conteudo,
+        imagem: imageUrl,
+        idusuario: userId,
+      });
+
+      setStatus("success");
+      toast.success(`"${data.titulo}" foi criado com sucesso!`);
+    } catch (error) {
+      setStatus("error");
+      toast.error(error instanceof Error ? error.message : "Erro desconhecido");
+    }
+  };
 
   return (
     <main className="mx-auto max-w-2xl p-4">
-      <CustomForm
-        form={form}
-        onSubmit={onSubmit}
+      <Link
+        className="hover:text-main-dark-blue mb-6 flex w-fit items-center gap-0.5 text-sm text-zinc-500 transition-colors"
+        href={"/gerenciamento"}
+        title="Voltar para a página anterior"
       >
+        <ArrowLeft size={16} />
+        Voltar
+      </Link>
+
+      <CustomForm form={form} onSubmit={onSubmit}>
         <h1 className="text-main-dark-blue mb-6 text-2xl font-semibold">Criar novo post</h1>
 
         <FormField
@@ -72,13 +124,7 @@ export default function CriarPostPage() {
           placeholder="Insira o conteúdo completo"
         />
 
-        <FormField
-          id="imagem"
-          label="Imagem"
-          type="file"
-          accept="image/*"
-          className="mb-6"
-        />
+        <FormField id="imagem" label="Imagem" type="file" accept="image/*" className="mb-6" />
 
         {status === "success" ? (
           <Link
@@ -86,21 +132,14 @@ export default function CriarPostPage() {
             href="/"
           >
             Post criado, voltar para Home
-            <HomeIcon
-              size={20}
-              className="text-gray-800"
-            />
+            <HomeIcon size={20} className="text-gray-800" />
           </Link>
         ) : (
-          <FormButton
-            type="submit"
-            title="Criar post"
-            disabled={status === "pending"}
-          >
+          <FormButton type="submit" title="Criar post" disabled={status === "pending"}>
             {status === "pending" ? "Enviando..." : "Criar Post"}
           </FormButton>
         )}
       </CustomForm>
     </main>
-  )
+  );
 }

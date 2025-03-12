@@ -32,12 +32,12 @@ export default function RootLayout({
       className="bg-zinc-50"
     >
       <body
-        className={`${dmSans.variable} ${inter.variable} container mx-auto px-6 antialiased md:px-0`}
+        className={`${dmSans.variable} ${inter.variable} min-h-screen bg-zinc-50 px-6 antialiased md:px-12`}
       >
         <Header />
         <div
           data-id="layout-children"
-          className="py-6 md:py-12"
+          className="px-4 py-6 md:px-8 md:py-12"
         >
           {children}
         </div>

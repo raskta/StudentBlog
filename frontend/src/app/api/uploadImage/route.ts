@@ -28,6 +28,7 @@ export async function POST(request: Request) {
         headers: { "Content-Type": "application/json" },
       });
     } catch (error) {
+      console.error("Erro ao processar resposta JSON:", error);
       console.error("Resposta não é um JSON válido:", textResponse);
       return new Response(
         JSON.stringify({ message: "Erro interno no servidor - Resposta inválida" }),

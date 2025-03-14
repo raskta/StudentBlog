@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-node_modules
-dist
-coverage
-=======
 backend/node_modules/
 backend/dist/
 backend/coverage/
@@ -50,4 +45,3 @@ frontend/.vercel
 # typescript
 frontend/*.tsbuildinfo
 frontend/next-env.d.ts
->>>>>>> vinicius-wrubleski

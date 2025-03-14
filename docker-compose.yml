@@ -1,34 +1,12 @@
-<<<<<<< HEAD
-version: "3.9"
-
-services:
-  app:
-    build: .
-    image: studentblog-app:latest
-    container_name: app_blogging
-    restart: always
-=======
 services:
   app:
     build: ./backend
     image: studentblog-app:latest
     container_name: app_blogging
->>>>>>> vinicius-wrubleski
     ports:
       - "${APP_PORT}:3000"
     environment:
       DATABASE_URL: "postgresql://${DB_USER}:${DB_PASSWORD}@database:5432/${DB_DATABASE}"
-<<<<<<< HEAD
-    depends_on:
-      - database
-    volumes:
-      - .:/app
-      - /app/node_modules
-  database:
-    image: postgres
-    container_name: database_blogging
-    restart: always
-=======
     env_file:
       - .env
     depends_on:
@@ -37,7 +15,6 @@ services:
   database:
     image: postgres
     container_name: database_blogging
->>>>>>> vinicius-wrubleski
     ports:
       - "${DB_PORT}:5432"
     environment:
@@ -47,11 +24,6 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-<<<<<<< HEAD
-volumes:
-  pgdata:
-    driver: local
-=======
   frontend:
     build: ./frontend
     container_name: frontend_blogging
@@ -67,4 +39,3 @@ volumes:
 volumes:
   pgdata:
     driver: local
->>>>>>> vinicius-wrubleski

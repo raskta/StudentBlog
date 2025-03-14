@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## 👋  Bem-vindo(a)
 
 Projeto desenvolvido para resolver o Tech Challenge - Fase 2 - FIAP.
@@ -12,8 +11,6 @@ Sobre o desafio: "_Desenvolver uma API para uma aplicação de blogging dinâmic
 - Stella Yano - RM359726
 - Vinicius Wrubleski - RM359675
 - Vitor Bassani - RM358848
-
-##
 
 ### 💻 Tecnologias Utilizadas
 
@@ -34,7 +31,7 @@ Sobre o desafio: "_Desenvolver uma API para uma aplicação de blogging dinâmic
 
 ##
 
-### ✔ Arquiterura
+### ✔ Arquitetura
 
 A Api foi desenvolvida na arquitetura REST com princípios de modularização e separação de responsabilidades.
 
@@ -165,13 +162,3 @@ npm run docker
 npm run docker-rebuild
 ```
 ...
-=======
-# Student Blog Application | Educational Sphere
-Essa é uma aplicação desenvolvida para fins estudantis referentes a pós-graduação em <i>Fullstack Development</i> na FIAP.
-
-## Arquitetura atual 🏗️
-
-- [Backend](/backend/)
-- [Frontend](/frontend/)
-
->>>>>>> vinicius-wrubleski

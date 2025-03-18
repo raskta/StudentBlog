@@ -28,6 +28,83 @@
 | **Icones**           | Lucide React                                                                |
 | **Notificações**     | Sonner              
 
+## ✔️ Arquitetura
+
+Organização do projeto:
+
+```
+├── src
+        ├── app
+        │   ├── api
+        │   │   ├── login
+        │   │   │   └── route.ts
+        │   │   ├── logout
+        │   │   │   └── route.ts
+        │   │   └── uploadImage
+        │   │   │   └── route.ts
+        │   ├── components
+        │   │   ├── CustomForm
+        │   │   │   ├── CustomForm.tsx
+        │   │   │   └── components
+        │   │   │   │   ├── FormButton
+        │   │   │   │       └── FormButton.tsx
+        │   │   │   │   └── FormField
+        │   │   │   │       └── FormField.tsx
+        │   │   ├── FormFieldset
+        │   │   │   └── FormFieldset.tsx
+        │   │   ├── Header
+        │   │   │   ├── Header.tsx
+        │   │   │   └── components
+        │   │   │   │   └── NavBar
+        │   │   │   │       ├── NavBar.tsx
+        │   │   │   │       └── NavLink.tsx
+        │   │   ├── Input
+        │   │   │   └── Input.tsx
+        │   │   ├── InputLabel
+        │   │   │   └── InputLabel.tsx
+        │   │   ├── PostCard
+        │   │   │   └── PostCard.tsx
+        │   │   ├── Posts
+        │   │   │   └── Posts.tsx
+        │   │   ├── PostsTable
+        │   │   │   └── PostsTable.tsx
+        │   │   ├── SearchFilter
+        │   │   │   └── SearchFilter.tsx
+        │   │   └── TextAreaInput
+        │   │   │   └── TextAreaInput.tsx
+        │   ├── favicon.ico
+        │   ├── gerenciamento
+        │   │   └── page.tsx
+        │   ├── globals.css
+        │   ├── layout.tsx
+        │   ├── lib
+        │   │   └── authSession.ts
+        │   ├── login
+        │   │   └── page.tsx
+        │   ├── not-found.tsx
+        │   ├── page.tsx
+        │   ├── post
+        │   │   └── [slug]
+        │   │   │   └── page.tsx
+        │   └── posts
+        │   │   ├── criar
+        │   │       └── page.tsx
+        │   │   └── editar
+        │   │       └── [id]
+        │   │           └── page.tsx
+        ├── hooks
+        │   └── useAuth.ts
+        ├── interfaces
+        │   ├── post.ts
+        │   └── user.ts
+        ├── middleware.ts
+        ├── schemas
+        │   └── login.schema.ts
+        └── stores
+        │   ├── auth.ts
+        │   └── post-store.ts
+    └── tsconfig.json
+```
 ## 🚀 Setup
 
 ### Pré-requisitos

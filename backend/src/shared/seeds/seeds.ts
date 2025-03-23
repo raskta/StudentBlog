@@ -10,6 +10,10 @@ const seedDatabase = async () => {
   const userRepository = AppDataSource.getRepository(User);
   const postRepository = AppDataSource.getRepository(Post);
 
+  // Limpar tabelas antes de inserir novos dados
+  await postRepository.delete({}); // Remove todos os posts
+  await userRepository.delete({}); // Remove todos os usuários
+
   // Criar usuários fictícios
   const user1 = userRepository.create({
     nome: "Professor A",

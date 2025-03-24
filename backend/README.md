@@ -103,7 +103,7 @@ src/
 docker compose up
 ```
 3. A aplicação estará disponível no enderepo `localhost:3000` verifique a documentação das rotas disponíveis no link `localhost:3000/api-docs`.
-4. Se ao executar o comando docker compose up, ocorrer o erro `./entrypoint.sh: 23: Syntax error: end of file unexpected (expecting "do")`, pode ser necessário alterar o formatdo de fim de linah do arquivo entrypoint.sh de CRLF para LF.
+4. Se ao executar o comando docker compose up, ocorrer o erro `./entrypoint.sh: 23: Syntax error: end of file unexpected (expecting "do")`, pode ser necessário alterar o formato de fim de linha do arquivo entrypoint.sh de CRLF para LF.
 
 ##
 

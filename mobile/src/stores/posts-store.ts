@@ -37,12 +37,10 @@ export const usePostsStore = create<PostsState>((set, get) => ({
     console.log("Fetching posts...");
     set({ loading: true, error: null });
 
-    setTimeout(() => {
-      set({ posts: postsMock, filteredPosts: postsMock, loading: false });
-    }, 1000);
+    set({ posts: postsMock, filteredPosts: postsMock, loading: false });
   },
   getPostById: (id: number) => {
-    const { posts } = get();
+    const posts = get().posts;
     return posts.find((post) => post.id === id);
   },
 }));

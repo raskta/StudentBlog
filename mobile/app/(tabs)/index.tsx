@@ -1,6 +1,6 @@
 import { Image, Text, View } from "react-native";
 import PostList from "@/src/components/PostList/PostList";
-import globalStyles from "../src/theme/styles";
+import globalStyles from "../../src/theme/styles";
 import SearchBar from "@/src/components/SearchBar/SearchBar";
 
 export default function Index() {

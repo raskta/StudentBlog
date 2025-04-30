@@ -2,7 +2,7 @@ import { FlatList, View, ActivityIndicator } from "react-native";
 import { useEffect, useState } from "react";
 import { usePostsStore } from "@/src/stores/posts-store";
 import PostCard from "../PostCard/PostCard";
-import { Post } from "../../../../shared/interfaces/post";
+import { useRouter } from "expo-router";
 
 const ITEMS_PER_PAGE = 8;
 
@@ -10,8 +10,9 @@ export default function PostList() {
   const allPosts = usePostsStore((state) => state.filteredPosts);
   const loading = usePostsStore((state) => state.loading);
   const fetchPosts = usePostsStore((state) => state.fetchPosts);
+  const router = useRouter();
 
-  const [visiblePosts, setVisiblePosts] = useState<Post[]>([]);
+  const [visiblePosts, setVisiblePosts] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [
     onEndReachedCalledDuringMomentum,
@@ -37,6 +38,10 @@ export default function PostList() {
     }
   }
 
+  const onEdit = (id: number) => {
+    router.push(`/post/editar/${id}`);
+  };
+
   const ItemSeparator = () => <View style={{ height: 16 }} />;
 
   return (
@@ -56,10 +61,12 @@ export default function PostList() {
               id={item.id}
               subtitulo={item.subtitulo}
               usuario={item.usuario}
+              editable={true}
+              onEdit={onEdit}
             />
           )}
           contentContainerStyle={{
-            paddingTop: 16,
+            paddingVertical: 16,
             paddingHorizontal: 2,
           }}
           ItemSeparatorComponent={ItemSeparator}

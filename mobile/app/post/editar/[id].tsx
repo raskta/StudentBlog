@@ -2,9 +2,12 @@ import { usePostsStore } from "@/src/stores/posts-store";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, SafeAreaView, Text, View } from "react-native";
 import { Post } from "../../../../shared/interfaces/post";
-import { useNavigation } from "expo-router";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import globalStyles from "@/src/theme/styles";
+import PostForm from "@/src/components/PostForm/PostForm";
 
-export default function EditarPost(id: number | string) {
+export default function EditPost() {
+  const { id } = useLocalSearchParams<{ id: string }>();
   const idNum = Number(id);
   const getPostById = usePostsStore((s) => s.getPostById);
   const [loading, setLoading] = useState(true);
@@ -16,9 +19,10 @@ export default function EditarPost(id: number | string) {
 
     if (fetched) {
       setFetchedPost(fetched);
-      navigation.setOptions({ title: fetched.titulo });
+      navigation.setOptions({ title: `Editando post: ${fetched.titulo}` });
     } else {
       setFetchedPost(undefined);
+      navigation.setOptions({ title: "Post não encontrado" });
       console.error(
         "Não foi possível encontrar o post para edição, tente novamente."
       );
@@ -37,17 +41,23 @@ export default function EditarPost(id: number | string) {
   if (!fetchedPost) {
     return (
       <SafeAreaView>
-        <Text>Post não encontrado.</Text>
+        <View
+          style={{
+            padding: 32,
+          }}
+        >
+          <Text style={{ fontSize: 18, color: "crimson" }}>
+            Post não foi encontrado, tente novamente ou selecione outro
+            conteúdo.
+          </Text>
+        </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView>
-      <View>
-        <Text>Editar post {fetchedPost.id}</Text>
-        {/* Aqui o resto do formulário ou campos que quiser editar */}
-      </View>
+    <SafeAreaView style={globalStyles.container}>
+      <PostForm post={fetchedPost} />
     </SafeAreaView>
   );
 }

@@ -6,7 +6,8 @@ import { Feather } from "@expo/vector-icons";
 
 type PostCardProps = Partial<Post> & {
   editable?: boolean;
-  onEdit?: (id: number) => void;
+  onEdit: (id: number) => void;
+  onDelete: (id: number, title: string) => void;
 };
 
 export default function PostCard({
@@ -16,6 +17,7 @@ export default function PostCard({
   usuario,
   editable = false,
   onEdit,
+  onDelete,
 }: PostCardProps) {
   return (
     <Link href={`/post/${id}`} style={styles.cardLink} asChild>
@@ -72,7 +74,7 @@ export default function PostCard({
               </Pressable>
 
               <Pressable
-                onPress={() => onDelete?.(id)}
+                onPress={() => onDelete && onDelete(id!, titulo!)}
                 style={({ pressed }) => [
                   styles.actionBtn,
                   styles.deleteBtn,

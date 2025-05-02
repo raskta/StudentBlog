@@ -1,8 +1,9 @@
-import { FlatList, View, ActivityIndicator } from "react-native";
+import { FlatList, View, ActivityIndicator, Alert } from "react-native";
 import { useEffect, useState } from "react";
 import { usePostsStore } from "@/src/stores/posts-store";
 import PostCard from "../PostCard/PostCard";
 import { useRouter } from "expo-router";
+import Toast from "react-native-toast-message";
 
 const ITEMS_PER_PAGE = 8;
 
@@ -42,6 +43,27 @@ export default function PostList() {
     router.push(`/post/editar/${id}`);
   };
 
+  const onDelete = (id: number, title: string) => {
+    Alert.alert(
+      `Excluir postagem`,
+      `Realmente deseja excluir a postagem: "${id} - ${title}"`,
+      [
+        {
+          text: "Não",
+          style: "cancel",
+        },
+        {
+          text: "Sim",
+          onPress(value) {
+            // TODO: implementar exclusão de post, api => backend
+            console.log("Excluindo post...");
+          },
+          style: "default",
+        },
+      ]
+    );
+  };
+
   const ItemSeparator = () => <View style={{ height: 16 }} />;
 
   return (
@@ -63,6 +85,7 @@ export default function PostList() {
               usuario={item.usuario}
               editable={true}
               onEdit={onEdit}
+              onDelete={onDelete}
             />
           )}
           contentContainerStyle={{

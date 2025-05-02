@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 9999,
-    backgroundColor: colors.mainBlue,
+    backgroundColor: colors.lightMainBlue,
     alignSelf: "flex-start",
 
     // Sombra iOS

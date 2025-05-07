@@ -42,7 +42,7 @@ export default function SearchBar() {
 
 const styles = StyleSheet.create({
   searchContainer: {
-    marginTop: 32,
+    marginTop: 20,
     borderWidth: 1,
     borderColor: "#a1a1aa",
     borderRadius: 10,

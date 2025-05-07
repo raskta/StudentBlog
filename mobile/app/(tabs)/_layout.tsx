@@ -23,6 +23,9 @@ export default function TabsLayout() {
         headerShown: false,
         tabBarActiveTintColor: "#2563eb",
         tabBarInactiveTintColor: "#64748b",
+        sceneStyle: {
+          marginTop: 72,
+        },
       }}
     >
       {tabs.map((tab) => (

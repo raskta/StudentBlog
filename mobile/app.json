@@ -12,6 +12,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.edusphere.studentblog", 
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/logo.png",
         "backgroundColor": "#ffffff"
@@ -33,7 +34,8 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "expo-font"
+      "expo-font",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true

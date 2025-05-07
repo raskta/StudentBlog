@@ -1,7 +1,7 @@
 import PostsManagementList from "@/src/components/PostsManagementList/PostsManagementList";
 import { colors } from "@/src/theme/colors";
 import globalStyles from "@/src/theme/styles";
-import { useNavigation } from "expo-router";
+import { Link, useNavigation } from "expo-router";
 import { useEffect } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -22,7 +22,9 @@ export default function gerenciamento() {
           onPress={handleCriarPostPress}
           style={({ pressed }) => [styles.pressable, pressed && styles.pressed]}
         >
-          <Text style={styles.text}>Criar post</Text>
+          <Link href="/post/criar">
+            <Text style={styles.text}>Criar post</Text>
+          </Link>
         </Pressable>
       </View>
       <PostsManagementList />
@@ -32,7 +34,7 @@ export default function gerenciamento() {
 
 const styles = StyleSheet.create({
   pressable: {
-    marginTop: 16,
+    marginVertical: 16,
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 9999,

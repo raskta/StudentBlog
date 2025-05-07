@@ -56,7 +56,7 @@ export default function EditPost() {
   }
 
   return (
-    <SafeAreaView style={globalStyles.container}>
+    <SafeAreaView style={[globalStyles.container, { paddingBottom: 24 }]}>
       <PostForm post={fetchedPost} />
     </SafeAreaView>
   );

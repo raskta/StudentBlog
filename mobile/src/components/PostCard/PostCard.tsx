@@ -6,8 +6,8 @@ import { Feather } from "@expo/vector-icons";
 
 type PostCardProps = Partial<Post> & {
   editable?: boolean;
-  onEdit: (id: number) => void;
-  onDelete: (id: number, title: string) => void;
+  onEdit?: (id: number) => void;
+  onDelete?: (id: number, title: string) => void;
 };
 
 export default function PostCard({

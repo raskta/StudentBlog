@@ -1,17 +1,8 @@
-import {
-  Button,
-  ScrollView,
-  StyleSheet,
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { ScrollView, StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
 import { Post } from "../../../../shared/interfaces/post";
 import { useState } from "react";
-import InputField from "./components/InputField/InputField";
+import InputField from "../InputField/InputField";
 import Toast from "react-native-toast-message";
-import { launchImageLibrary } from "react-native-image-picker";
 import { pickImage } from "@/src/utils/pickImage";
 
 // e configurar permissões no AndroidManifest/Info.plist
@@ -94,9 +85,7 @@ export default function PostForm({ post }: PostFormProps) {
 
       Toast.show({
         type: "success",
-        text1: post
-          ? "Post atualizado com sucesso!"
-          : "Post criado com sucesso!",
+        text1: post ? "Post atualizado com sucesso!" : "Post criado com sucesso!",
       });
     } catch (error) {
       console.error(error);
@@ -146,7 +135,10 @@ export default function PostForm({ post }: PostFormProps) {
         {image ? (
           <View style={styles.previewContainer}>
             <Text>Pré-visualização:</Text>
-            <Image source={{ uri: image.uri }} style={styles.previewImage} />
+            <Image
+              source={{ uri: image.uri }}
+              style={styles.previewImage}
+            />
           </View>
         ) : (
           <Text style={styles.noImageText}>Nenhuma imagem selecionada</Text>
@@ -154,17 +146,12 @@ export default function PostForm({ post }: PostFormProps) {
       </View>
 
       <TouchableOpacity
-        style={[
-          styles.submitButton,
-          !hasChangedFields() && styles.disabledButton,
-        ]}
+        style={[styles.submitButton, !hasChangedFields() && styles.disabledButton]}
         onPress={handleSubmit}
         disabled={!hasChangedFields()}
         activeOpacity={0.7}
       >
-        <Text style={styles.submitButtonText}>
-          {post ? "Atualizar Post" : "Criar Post"}
-        </Text>
+        <Text style={styles.submitButtonText}>{post ? "Atualizar Post" : "Criar Post"}</Text>
       </TouchableOpacity>
     </ScrollView>
   );

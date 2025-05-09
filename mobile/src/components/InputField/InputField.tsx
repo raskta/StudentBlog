@@ -7,7 +7,14 @@ type InputFieldProps = {
   value: string;
   onChangeValue: (text: string) => void;
   placeholder?: string;
-  keyboardType?: "default" | "numeric" | "number-pad" | "decimal-pad";
+  keyboardType?:
+    | "default"
+    | "numeric"
+    | "number-pad"
+    | "decimal-pad"
+    | "email-address"
+    | "phone-pad"
+    | "url";
 };
 
 export default function InputField({

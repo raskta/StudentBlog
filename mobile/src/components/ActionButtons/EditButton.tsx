@@ -17,7 +17,11 @@ const EditButton: React.FC<EditButtonProps> = ({ id, onEdit }) => (
       pressed && { opacity: 0.6 },
     ]}
   >
-    <Feather name="edit-2" size={18} color="#2563eb" />
+    <Feather
+      name="edit-2"
+      size={18}
+      color="#2563eb"
+    />
   </Pressable>
 );
 
@@ -26,7 +30,5 @@ export default EditButton;
 const editButtonStyles = StyleSheet.create({
   editBtn: {
     backgroundColor: "#bfdbfe",
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10,
   },
 });

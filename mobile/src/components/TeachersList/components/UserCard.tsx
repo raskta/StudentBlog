@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
   userCardContent: {
     padding: 16,
-    flex: 1,
+    flex: 2,
   },
   cardHeader: {
     flexDirection: "row",
@@ -138,6 +138,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: "100%",
     alignItems: "stretch",
-    flex: 2,
+    flex: 1,
   },
 });

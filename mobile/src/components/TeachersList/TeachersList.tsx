@@ -4,23 +4,25 @@ import mockUsers from "@/src/mocks/users";
 import { User } from "../../../../shared/interfaces/user";
 import UserCard from "./components/UserCard";
 import { View } from "react-native";
+import { useUsersStore } from "@/src/stores/users-store";
+import { useRouter } from "expo-router";
 
 const TeachersList = () => {
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const fetchUsers = useUsersStore((s) => s.fetchUsers);
+  const loading = useUsersStore((s) => s.loading);
+  const users = useUsersStore((s) => s.users);
 
-  // Simulando fetch, extraindo da mock de users
   useEffect(() => {
-    setTimeout(() => {
-      setUsers(mockUsers);
-      setLoading(false);
-    }, 500);
-  }, []);
+    fetchUsers();
+  }, [fetchUsers, users]);
 
   const ItemSeparator = () => <View style={{ height: 16 }} />;
 
   // User actions
-  const handleEdit = () => {};
+  const handleEdit = (id: number) => {
+    router.push(`/user/editar/${id}`);
+  };
   const handleDelete = () => {};
 
   return (

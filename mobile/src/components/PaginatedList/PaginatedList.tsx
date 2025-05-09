@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  FlatList,
-  View,
-  ActivityIndicator,
-  StyleProp,
-  ViewStyle,
-  StyleSheet,
-} from "react-native";
+import { FlatList, View, ActivityIndicator, StyleProp, ViewStyle, StyleSheet } from "react-native";
 
 export interface PaginatedListProps<T> {
   data: T[];
@@ -56,8 +49,6 @@ export function PaginatedList<T>({
       setPage(nextPage);
     }
   };
-
-  const ItemSeparator = () => <View style={{ height: 16 }} />;
 
   if (loading) {
     return (

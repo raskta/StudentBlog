@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { Post } from "../../../shared/interfaces/post";
-import { postsMock } from "@/src/mocks/posts"; // importa o mock
+import { postsMock } from "@/src/mocks/posts";
 
 enum RequestStatus {
   IDLE = "idle",
@@ -62,9 +62,7 @@ export const usePostsStore = create<PostsState>((set, get) => ({
 
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(
-        error.message || `Erro ao editar post: ${id} - ${data.titulo}`
-      );
+      throw new Error(error.message || `Erro ao editar post: ${id} - ${data.titulo}`);
     }
 
     const updatedPost: Post = await response.json();

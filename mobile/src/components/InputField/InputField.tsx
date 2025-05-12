@@ -1,6 +1,6 @@
-import { colors } from "@/src/theme/colors";
 import { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Text, TextInput, View } from "react-native";
+import { styles } from "./styles";
 
 type InputFieldProps = {
   label: string;
@@ -43,23 +43,3 @@ export default function InputField({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  label: {
-    fontWeight: "bold",
-    marginBottom: 8,
-    color: colors.darkBlue,
-  },
-  inputField: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 6,
-    padding: 10,
-    maxHeight: 320,
-    textAlignVertical: "top",
-  },
-  inputFieldFocused: {
-    borderColor: "#007bff",
-    backgroundColor: "#f0f8ff",
-  },
-});

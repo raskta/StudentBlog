@@ -1,33 +1,44 @@
-import { Tabs } from "expo-router";
+import { Tabs, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { Pressable } from "react-native";
+import { useAuth } from "@/src/stores/auth-store";
 
 type TabConfig = {
   name: string;
   title: string;
   icon: React.ComponentProps<typeof Ionicons>["name"];
-  isProtected?: boolean;
 };
 
 const tabs: TabConfig[] = [
-  {
-    name: "index",
-    title: "Home",
-    icon: "home-outline",
-  },
+  { name: "index", title: "Home", icon: "home-outline" },
+  // outras abas aqui se necessário
 ];
 
 export default function TabsLayout() {
+  const { token, logout } = useAuth();
+
+  const handleAuthAction = async () => {
+    if (token) {
+      await logout();
+      router.replace("/login");
+    } else {
+      router.push("/login");
+    }
+  };
+
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: "#2563eb",
         tabBarInactiveTintColor: "#64748b",
-        sceneStyle: {
-          marginTop: 72,
+        tabBarStyle: {
+          height: 60,
+          paddingBottom: 10,
         },
       }}
     >
+      {/* Outras abas */}
       {tabs.map((tab) => (
         <Tabs.Screen
           key={tab.name}
@@ -41,10 +52,32 @@ export default function TabsLayout() {
                 color={color}
               />
             ),
-            tabBarStyle: tab.isProtected ? { display: "none" } : undefined,
           }}
         />
       ))}
+
+      {/* Última aba como botão de login/logout */}
+      <Tabs.Screen
+        name="auth-tab"
+        options={{
+          title: token ? "Sair" : "Entrar",
+          tabBarIcon: ({ color }) => (
+            <Ionicons
+              name={token ? "exit-outline" : "log-in-outline"}
+              size={22}
+              color={color}
+              style={{ opacity: 0.7 }}
+            />
+          ),
+          tabBarButton: (props) => (
+            <Pressable
+              {...props}
+              onPress={handleAuthAction}
+              style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1, alignItems: "center" }]}
+            />
+          ),
+        }}
+      />
     </Tabs>
   );
 }

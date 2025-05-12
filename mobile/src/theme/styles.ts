@@ -11,6 +11,11 @@ const globalStyles = StyleSheet.create({
     fontWeight: "bold",
     color: "#172554",
   },
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export default globalStyles;

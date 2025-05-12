@@ -4,6 +4,7 @@ import { useState } from "react";
 import InputField from "../InputField/InputField";
 import Toast from "react-native-toast-message";
 import { pickImage } from "@/src/utils/pickImage";
+import SubmitButton from "../SubmitButton/SubmitButton";
 
 // e configurar permissões no AndroidManifest/Info.plist
 
@@ -122,7 +123,6 @@ export default function PostForm({ post }: PostFormProps) {
         placeholder="Insira o conteúdo"
         keyboardType="default"
       />
-
       <View>
         <TouchableOpacity
           style={styles.imageButton}
@@ -144,15 +144,12 @@ export default function PostForm({ post }: PostFormProps) {
           <Text style={styles.noImageText}>Nenhuma imagem selecionada</Text>
         )}
       </View>
-
-      <TouchableOpacity
-        style={[styles.submitButton, !hasChangedFields() && styles.disabledButton]}
+      import SubmitButton from "../components/SubmitButton"; // ajuste o caminho conforme necessário
+      <SubmitButton
+        label={post ? "Atualizar Post" : "Criar Post"}
         onPress={handleSubmit}
         disabled={!hasChangedFields()}
-        activeOpacity={0.7}
-      >
-        <Text style={styles.submitButtonText}>{post ? "Atualizar Post" : "Criar Post"}</Text>
-      </TouchableOpacity>
+      />
     </ScrollView>
   );
 }
@@ -177,6 +174,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 8,
   },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "600",
+  },
   imageButton: {
     backgroundColor: "#60a5fa",
     paddingVertical: 12,
@@ -189,31 +191,5 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  submitButton: {
-    backgroundColor: "#60a5fa",
-    paddingVertical: 14,
-    borderRadius: 8,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 3,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-  },
-  disabledButton: {
-    backgroundColor: "#93c5fd",
-    opacity: 0.7,
-  },
-  submitButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "600",
   },
 });

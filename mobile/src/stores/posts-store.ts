@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { Post } from "../../../shared/interfaces/post";
-import { postsMock } from "@/src/mocks/posts";
+
+const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
 enum RequestStatus {
   IDLE = "idle",
@@ -19,7 +20,8 @@ type PostsState = {
   setPosts: (posts: Post[]) => void;
   getPostById: (id: number) => Post | undefined;
   fetchPosts: () => Promise<void>;
-  updatePost: (id: number, data: Post) => Promise<Post>;
+  updatePost: (id: number, data: Partial<Post>) => Promise<Post>;
+  deletePost: (id: number) => Promise<void>;
 };
 
 export const usePostsStore = create<PostsState>((set, get) => ({
@@ -50,27 +52,76 @@ export const usePostsStore = create<PostsState>((set, get) => ({
     console.log("Fetching posts...");
     set({ loading: true, error: null });
 
-    set({ posts: postsMock, filteredPosts: postsMock, loading: false });
+    try {
+      const response = await fetch(`${API_URL}/posts`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Erro ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+
+      set({
+        posts: data,
+        filteredPosts: data,
+        loading: false,
+      });
+    } catch (error: any) {
+      console.error("Erro ao buscar posts:", error.message);
+
+      set({
+        error: error.message || "Erro desconhecido",
+        loading: false,
+      });
+    }
   },
 
-  updatePost: async (id: number, data: Post) => {
-    const response = await fetch(`http://localhost:3000/posts/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+  updatePost: async (id, data) => {
+    try {
+      const response = await fetch(`${API_URL}/posts/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || `Erro ao editar post: ${id} - ${data.titulo}`);
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || `Erro ao editar post: ${id} - ${data.titulo}`);
+      }
+
+      const updatedPost: Post = await response.json();
+
+      set((state) => ({
+        posts: state.posts.map((post) => (post.id === id ? { ...post, ...updatedPost } : post)),
+      }));
+
+      return updatedPost;
+    } catch (error) {
+      console.error("Erro no updatePost:", error);
+      throw error;
     }
+  },
 
-    const updatedPost: Post = await response.json();
+  deletePost: async (id: number) => {
+    try {
+      const response = await fetch(`http://localhost:3000/posts/${id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
 
-    set((state) => ({
-      posts: state.posts.map((post) => (post.id === id ? updatedPost : post)),
-    }));
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Erro ao excluir post");
+      }
 
-    return updatedPost;
+      set((state) => ({
+        posts: state.posts.filter((post) => post.id !== id),
+      }));
+    } catch (error) {}
   },
 }));

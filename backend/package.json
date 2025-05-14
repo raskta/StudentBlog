@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc --build",
     "dev": "ts-node-dev --respawn --env-file ../.env src/app.ts",
-    "seed": "ts-node-dev src/shared/seeds/seeds.ts",
+    "seed": "ts-node-dev --env-file ../.env src/shared/seeds/seeds.ts",
     "test": "jest --passWithNoTests --coverage",
     "start": "npm run build && node dist/app.js",
     "start-local": "npm run build && node --env-file .env dist/app.js",

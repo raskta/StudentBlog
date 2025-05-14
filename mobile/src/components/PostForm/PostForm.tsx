@@ -5,8 +5,7 @@ import InputField from "../InputField/InputField";
 import Toast from "react-native-toast-message";
 import { pickImage } from "@/src/utils/pickImage";
 import SubmitButton from "../SubmitButton/SubmitButton";
-
-// e configurar permissões no AndroidManifest/Info.plist
+import { usePostsStore } from "@/src/stores/posts-store";
 
 type PostFormProps = {
   post?: Partial<Post>;
@@ -21,6 +20,8 @@ export default function PostForm({ post }: PostFormProps) {
     type: string;
     name: string;
   } | null>(null);
+
+  const { updatePost } = usePostsStore();
 
   const hasChangedFields = () => {
     if (!post) return true;
@@ -48,6 +49,7 @@ export default function PostForm({ post }: PostFormProps) {
       setImage(result.image);
     }
   };
+
   const handleSubmit = async () => {
     if (!title.trim() || !content.trim()) {
       Toast.show({
@@ -58,41 +60,28 @@ export default function PostForm({ post }: PostFormProps) {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("titulo", title);
-    formData.append("subtitulo", subtitle);
-    formData.append("conteudo", content);
-
-    if (image) {
-      formData.append("imagem", {
-        uri: image.uri,
-        type: image.type,
-        name: image.name,
-      } as any);
-    }
-
     try {
-      const response = await fetch("https://seu-backend.com/api/posts", {
-        method: post ? "PUT" : "POST",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Falha ao enviar o post");
+      if (!post?.id) {
+        throw new Error("O id fornecido para edição não existe");
       }
+
+      const updatedFields: Record<string, any> = {
+        titulo: title,
+        subtitulo: subtitle,
+        conteudo: content,
+      };
+
+      await updatePost(post.id, updatedFields);
 
       Toast.show({
         type: "success",
-        text1: post ? "Post atualizado com sucesso!" : "Post criado com sucesso!",
+        text1: "Post atualizado com sucesso!",
       });
     } catch (error) {
       console.error(error);
       Toast.show({
         type: "error",
-        text1: "Erro ao enviar o post",
+        text1: "Erro ao editar o post",
       });
     }
   };
@@ -144,7 +133,6 @@ export default function PostForm({ post }: PostFormProps) {
           <Text style={styles.noImageText}>Nenhuma imagem selecionada</Text>
         )}
       </View>
-      import SubmitButton from "../components/SubmitButton"; // ajuste o caminho conforme necessário
       <SubmitButton
         label={post ? "Atualizar Post" : "Criar Post"}
         onPress={handleSubmit}

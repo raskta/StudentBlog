@@ -1,63 +1,45 @@
-import { usePostsStore } from "@/src/stores/posts-store";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ActivityIndicator, SafeAreaView, Text, View } from "react-native";
-import { Post } from "../../../../shared/interfaces/post";
 import { useLocalSearchParams, useNavigation } from "expo-router";
+import { usePostsStore } from "@/src/stores/posts-store";
 import globalStyles from "@/src/theme/styles";
 import PostForm from "@/src/components/PostForm/PostForm";
+import { Post } from "../../../../shared/interfaces/post";
 
 export default function EditPost() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const idNum = Number(id);
-  const getPostById = usePostsStore((s) => s.getPostById);
-  const [loading, setLoading] = useState(true);
-  const [fetchedPost, setFetchedPost] = useState<Post | undefined>(undefined);
+  const postId = Number(id);
   const navigation = useNavigation();
 
+  const post = usePostsStore((s) => s.getPostById(postId));
+
   useEffect(() => {
-    const fetched = getPostById(idNum);
-
-    if (fetched) {
-      setFetchedPost(fetched);
-      navigation.setOptions({ title: `Editando post: ${fetched.titulo}` });
+    if (post) {
+      navigation.setOptions({ title: `Editando: ${post.titulo}` });
     } else {
-      setFetchedPost(undefined);
       navigation.setOptions({ title: "Post não encontrado" });
-      console.error(
-        "Não foi possível encontrar o post para edição, tente novamente."
-      );
     }
-    setLoading(false);
-  }, [id, getPostById, navigation]);
+  }, [navigation, post]);
 
-  if (loading) {
+  if (post === undefined) {
     return (
-      <SafeAreaView>
+      <SafeAreaView style={globalStyles.centered}>
         <ActivityIndicator size="large" />
       </SafeAreaView>
     );
   }
 
-  if (!fetchedPost) {
+  if (post === null) {
     return (
-      <SafeAreaView>
-        <View
-          style={{
-            padding: 32,
-          }}
-        >
-          <Text style={{ fontSize: 18, color: "crimson" }}>
-            Post não foi encontrado, tente novamente ou selecione outro
-            conteúdo.
-          </Text>
-        </View>
+      <SafeAreaView style={globalStyles.centered}>
+        <Text style={globalStyles.errorText}>Post não encontrado. Volte e tente outro.</Text>
       </SafeAreaView>
     );
   }
 
   return (
     <SafeAreaView style={[globalStyles.container, { paddingBottom: 24 }]}>
-      <PostForm post={fetchedPost} />
+      <PostForm post={post} />
     </SafeAreaView>
   );
 }

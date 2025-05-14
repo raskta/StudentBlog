@@ -16,6 +16,10 @@ const globalStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  errorText: {
+    color: "crimson",
+    fontSize: 16,
+  },
 });
 
 export default globalStyles;

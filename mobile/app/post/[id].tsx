@@ -20,6 +20,7 @@ const IMAGE_HEIGHT = (IMAGE_WIDTH * 9) / 16;
 
 export default function PostDetails() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const idNum = Number(id);
   const navigation = useNavigation();
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
@@ -27,7 +28,7 @@ export default function PostDetails() {
 
   useEffect(() => {
     setLoading(true);
-    const fetched = getPostById(Number(id));
+    const fetched = getPostById(idNum);
     if (fetched) {
       setPost(fetched);
       navigation.setOptions({ title: fetched.titulo });
@@ -55,12 +56,16 @@ export default function PostDetails() {
     <SafeAreaView style={styles.flex}>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.dateBadge} accessibilityLabel="Data de criação">
-            {post.dtcriacao.toLocaleDateString("pt-BR", {
-              day: "2-digit",
-              month: "short",
-              year: "numeric",
-            })}
+          <Text
+            style={styles.dateBadge}
+            accessibilityLabel="Data de criação"
+          >
+            {post.dtcriacao &&
+              new Date(post.dtcriacao).toLocaleDateString("pt-BR", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+              })}
           </Text>
           <Text accessibilityLabel="Autor do post">{post.usuario.nome}</Text>
         </View>

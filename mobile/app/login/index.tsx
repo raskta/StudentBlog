@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { SafeAreaView, Text, View, TextInput, TouchableOpacity } from "react-native";
+import { Text, View, TextInput, TouchableOpacity } from "react-native";
 import styles from "./styles";
 import globalStyles from "@/src/theme/styles";
 import { useAuth } from "@/src/stores/auth-store";
 import Toast from "react-native-toast-message";
 import { useRouter } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -30,7 +31,7 @@ const LoginScreen = () => {
     setToken(fakeToken);
     Toast.show({ type: "success", text1: "Login realizado com sucesso" });
 
-    router.navigate("/");
+    router.push("/");
   };
 
   return (

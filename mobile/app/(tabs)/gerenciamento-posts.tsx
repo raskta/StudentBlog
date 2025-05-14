@@ -4,6 +4,7 @@ import globalStyles from "@/src/theme/styles";
 import { Link, useNavigation } from "expo-router";
 import { useEffect } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function gerenciamento() {
   const navigation = useNavigation();
@@ -15,7 +16,7 @@ export default function gerenciamento() {
   const handleCriarPostPress = () => {};
 
   return (
-    <View style={globalStyles.container}>
+    <SafeAreaView style={globalStyles.container}>
       <View>
         <Text style={globalStyles.mainTitle}>Gerenciamento de Posts</Text>
         <Pressable
@@ -28,7 +29,7 @@ export default function gerenciamento() {
         </Pressable>
       </View>
       <PostsManagementList />
-    </View>
+    </SafeAreaView>
   );
 }
 

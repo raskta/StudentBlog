@@ -13,14 +13,11 @@ export default function PostList() {
 
   const [visiblePosts, setVisiblePosts] = useState<Post[]>([]);
   const [page, setPage] = useState(1);
-  const [
-    onEndReachedCalledDuringMomentum,
-    setOnEndReachedCalledDuringMomentum,
-  ] = useState(false);
+  const [onEndReachedCalledDuringMomentum, setOnEndReachedCalledDuringMomentum] = useState(false);
 
   useEffect(() => {
     fetchPosts();
-  }, []);
+  }, [fetchPosts]);
 
   useEffect(() => {
     setVisiblePosts(allPosts.slice(0, ITEMS_PER_PAGE));

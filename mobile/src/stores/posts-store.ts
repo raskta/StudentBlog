@@ -20,8 +20,17 @@ type PostsState = {
   setPosts: (posts: Post[]) => void;
   getPostById: (id: number) => Post | undefined;
   fetchPosts: () => Promise<void>;
+  createPost: (data: CreatePostRequestFields) => Promise<Post>;
   updatePost: (id: number, data: Partial<Post>) => Promise<Post>;
   deletePost: (id: number) => Promise<void>;
+};
+
+export type CreatePostRequestFields = {
+  titulo: string;
+  subtitulo: string;
+  conteudo: string;
+  imagem: FileList | string;
+  idusuario: string;
 };
 
 export const usePostsStore = create<PostsState>((set, get) => ({
@@ -81,6 +90,35 @@ export const usePostsStore = create<PostsState>((set, get) => ({
     }
   },
 
+  createPost: async (data: CreatePostRequestFields): Promise<Post> => {
+    const { posts } = get();
+    posts.forEach((post) => {
+      if (post.titulo === data.titulo || post.conteudo === data.conteudo) {
+        throw new Error("Post com esse título e/ou conteúdo já existe");
+      }
+    });
+
+    const response = await fetch(`${API_URL}/posts`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Erro ao criar o post");
+    }
+
+    const createdPost = await response.json();
+
+    set((state) => ({
+      posts: [...state.posts, createdPost],
+      filteredPosts: [...state.posts, createdPost],
+    }));
+
+    return createdPost;
+  },
+
   updatePost: async (id, data) => {
     try {
       const response = await fetch(`${API_URL}/posts/${id}`, {
@@ -98,6 +136,9 @@ export const usePostsStore = create<PostsState>((set, get) => ({
 
       set((state) => ({
         posts: state.posts.map((post) => (post.id === id ? { ...post, ...updatedPost } : post)),
+        filteredPosts: state.posts.map((post) =>
+          post.id === id ? { ...post, ...updatedPost } : post
+        ),
       }));
 
       return updatedPost;
@@ -109,7 +150,7 @@ export const usePostsStore = create<PostsState>((set, get) => ({
 
   deletePost: async (id: number) => {
     try {
-      const response = await fetch(`http://localhost:3000/posts/${id}`, {
+      const response = await fetch(`${API_URL}/posts/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
@@ -121,6 +162,7 @@ export const usePostsStore = create<PostsState>((set, get) => ({
 
       set((state) => ({
         posts: state.posts.filter((post) => post.id !== id),
+        filteredPosts: state.posts.filter((post) => post.id !== id),
       }));
     } catch (error) {}
   },

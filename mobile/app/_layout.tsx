@@ -1,15 +1,16 @@
-import { useAuth } from "@/src/stores/auth-store";
+import { useAuthStore } from "@/src/stores/auth-store";
 import { Stack, useRouter, useSegments } from "expo-router";
 import { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 
-export default function PostsLayout() {
-  const { loadTokenFromStorage } = useAuth();
-  const token = useAuth((s) => s.token);
+export default function AppLayout() {
+  const loadTokenFromStorage = useAuthStore((s) => s.loadTokenFromStorage);
+  const token = useAuthStore((s) => s.token);
   const [ready, setReady] = useState(false);
   const segments = useSegments();
   const router = useRouter();
+  const loggedUser = useAuthStore((s) => s.loggedUser);
 
   useEffect(() => {
     loadTokenFromStorage().finally(() => setReady(true));

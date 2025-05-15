@@ -5,7 +5,7 @@ import { styles } from "./styles";
 type InputFieldProps = {
   label: string;
   value: string;
-  onChangeValue: (text: string) => void;
+  onChangeValue?: (text: string) => void;
   placeholder?: string;
   keyboardType?:
     | "default"
@@ -15,6 +15,7 @@ type InputFieldProps = {
     | "email-address"
     | "phone-pad"
     | "url";
+  disabled?: boolean;
 };
 
 export default function InputField({
@@ -23,6 +24,7 @@ export default function InputField({
   onChangeValue,
   placeholder,
   keyboardType = "default",
+  disabled = false,
 }: InputFieldProps) {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -30,10 +32,12 @@ export default function InputField({
     <View>
       <Text style={styles.label}>{label}</Text>
       <TextInput
-        editable
+        editable={!disabled}
         multiline
         value={value}
-        onChangeText={(text) => onChangeValue(text)}
+        onChangeText={(text) => {
+          onChangeValue && onChangeValue(text);
+        }}
         style={[styles.inputField, isFocused && styles.inputFieldFocused]}
         placeholder={placeholder}
         keyboardType={keyboardType}

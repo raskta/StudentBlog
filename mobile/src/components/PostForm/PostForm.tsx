@@ -5,23 +5,26 @@ import InputField from "../InputField/InputField";
 import Toast from "react-native-toast-message";
 import { pickImage } from "@/src/utils/pickImage";
 import SubmitButton from "../SubmitButton/SubmitButton";
-import { usePostsStore } from "@/src/stores/posts-store";
+import { CreatePostRequestFields, usePostsStore } from "@/src/stores/posts-store";
+import { useAuthStore } from "@/src/stores/auth-store";
 
 type PostFormProps = {
   post?: Partial<Post>;
 };
 
 export default function PostForm({ post }: PostFormProps) {
+  const loggedUser = useAuthStore((s) => s.loggedUser);
   const [title, onChangeTitle] = useState(post?.titulo ?? "");
   const [subtitle, onChangeSubtitle] = useState(post?.subtitulo ?? "");
   const [content, onChangeContent] = useState(post?.conteudo ?? "");
+  const [author, onChangeAuthor] = useState(post?.usuario ?? loggedUser!);
   const [image, setImage] = useState<{
     uri: string;
     type: string;
     name: string;
   } | null>(null);
 
-  const { updatePost } = usePostsStore();
+  const { createPost, updatePost } = usePostsStore();
 
   const hasChangedFields = () => {
     if (!post) return true;
@@ -61,29 +64,35 @@ export default function PostForm({ post }: PostFormProps) {
     }
 
     try {
-      if (!post?.id) {
-        throw new Error("O id fornecido para edição não existe");
+      if (post?.id) {
+        const updatedFields: Record<string, any> = {
+          titulo: title,
+          subtitulo: subtitle,
+          conteudo: content,
+        };
+        await updatePost(post.id, updatedFields);
+      } else {
+        const data: CreatePostRequestFields = {
+          titulo: title,
+          subtitulo: subtitle,
+          conteudo: content,
+          idusuario: author.id.toString(),
+          imagem: "",
+        };
+
+        try {
+          const createdPost = await createPost(data);
+
+          Toast.show({
+            type: "success",
+            text1: "Post criado",
+            text2: `${createdPost?.titulo} criado com sucesso`,
+          });
+        } catch (error: any) {
+          throw new Error("Erro ao criar post:", error);
+        }
       }
-
-      const updatedFields: Record<string, any> = {
-        titulo: title,
-        subtitulo: subtitle,
-        conteudo: content,
-      };
-
-      await updatePost(post.id, updatedFields);
-
-      Toast.show({
-        type: "success",
-        text1: "Post atualizado com sucesso!",
-      });
-    } catch (error) {
-      console.error(error);
-      Toast.show({
-        type: "error",
-        text1: "Erro ao editar o post",
-      });
-    }
+    } catch (error) {}
   };
 
   return (
@@ -111,6 +120,11 @@ export default function PostForm({ post }: PostFormProps) {
         onChangeValue={onChangeContent}
         placeholder="Insira o conteúdo"
         keyboardType="default"
+      />
+      <InputField
+        label="Autor"
+        value={author.nome}
+        disabled
       />
       <View>
         <TouchableOpacity

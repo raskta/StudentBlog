@@ -1,37 +1,52 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Text, View, TextInput, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
+import Toast from "react-native-toast-message";
+import { useAuth } from "@/src/hooks/useAuth";
+import { ApiRequestError } from "../../../shared/interfaces/error";
+
 import styles from "./styles";
 import globalStyles from "@/src/theme/styles";
-import { useAuth } from "@/src/stores/auth-store";
-import Toast from "react-native-toast-message";
-import { useRouter } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
 
-const LoginScreen = () => {
+export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const setToken = useAuth((state) => state.setToken);
   const router = useRouter();
+  const { login } = useAuth();
 
-  const validateEmail = (email: string) => {
-    const regex = /^\S+@\S+\.\S+$/;
-    return regex.test(email);
-  };
-
-  const handleLogin = () => {
-    if (!email || !password) {
-      return Toast.show({ type: "error", text1: "Preencha todos os campos" });
+  const handleLogin = async () => {
+    if (!email.trim() || !password) {
+      Toast.show({
+        type: "error",
+        text1: "Campos incompletos",
+        text2: "Preencha email e senha para continuar",
+      });
+      return;
     }
 
-    if (!validateEmail(email)) {
-      return Toast.show({ type: "error", text1: "Preencha todos os campos" });
+    try {
+      const ok = await login({ email, password });
+      if (ok) {
+        Toast.show({ type: "success", text1: "Login realizado com sucesso" });
+        router.replace("/");
+      }
+    } catch (error: unknown) {
+      let message = "Ocorreu um erro inesperado";
+
+      if (error instanceof Error) {
+        message = error.message;
+      } else if ((error as ApiRequestError).message !== undefined) {
+        message = (error as ApiRequestError).message;
+      }
+
+      console.error("Erro no login:", message);
+      Toast.show({
+        type: "error",
+        text1: "Erro no login",
+        text2: message,
+      });
     }
-
-    const fakeToken = "123456abcdef";
-    setToken(fakeToken);
-    Toast.show({ type: "success", text1: "Login realizado com sucesso" });
-
-    router.push("/");
   };
 
   return (
@@ -67,8 +82,8 @@ const LoginScreen = () => {
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
       </View>
+
+      <Toast />
     </SafeAreaView>
   );
-};
-
-export default LoginScreen;
+}

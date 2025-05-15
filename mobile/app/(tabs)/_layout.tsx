@@ -1,8 +1,9 @@
 import { Tabs, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { Pressable } from "react-native";
-import { useAuth } from "@/src/stores/auth-store";
+import { useAuthStore } from "@/src/stores/auth-store";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { useEffect } from "react";
 
 type TabConfig = {
   name: string;
@@ -13,8 +14,13 @@ type TabConfig = {
 const tabs: TabConfig[] = [{ name: "index", title: "Home", icon: "home-outline" }];
 
 export default function TabsLayout() {
-  const { logout } = useAuth();
-  const token = useAuth((s) => s.token);
+  const { logout } = useAuthStore();
+  const token = useAuthStore((s) => s.token);
+  const { loadTokenFromStorage } = useAuthStore();
+
+  useEffect(() => {
+    loadTokenFromStorage();
+  }, []);
 
   const handleAuthAction = async () => {
     if (token) {

@@ -4,13 +4,12 @@ import UsersMock from "../mocks/users";
 
 type UsersState = {
   loading: boolean;
-  loggedUser: User | null;
   users: User[];
 
   // Actions
   fetchUsers: () => Promise<void>;
   getUserById: (id: number) => Promise<User | undefined>;
-  setLoggedUser: (user: User | null) => void;
+  getUserByEmail: (email: string) => Promise<User | undefined>;
   addUser: (user: User) => void;
   updateUser: (updated: User) => void;
   removeUser: (id: number) => void;
@@ -21,9 +20,28 @@ export const useUsersStore = create<UsersState>((set, get) => ({
   loggedUser: null,
   users: [],
   fetchUsers: async () => {
-    console.log("Fetching users");
+    console.log("[UsersStore] Fetching users");
+
     set({ loading: true });
-    set({ users: UsersMock, loading: false });
+
+    try {
+      const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/users`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Ocorreu um erro ao obter usuários da API");
+      }
+
+      const users = await response.json();
+      set({ users, loading: false });
+    } catch (error) {
+      set({ loading: false });
+      console.error("Erro ao obter usuários da API:", error);
+    }
   },
   getUserById: async (id: number) => {
     const { users, fetchUsers } = get();
@@ -32,18 +50,27 @@ export const useUsersStore = create<UsersState>((set, get) => ({
     }
     return get().users.find((u) => u.id === id);
   },
-  setLoggedUser: (user) => set({ loggedUser: user }),
+
+  getUserByEmail: async (email: string) => {
+    const { users, fetchUsers } = get();
+
+    if (users.length === 0) {
+      await fetchUsers();
+    }
+
+    const freshUsers = get().users;
+    return freshUsers.find((u) => u.email === email);
+  },
+
   addUser: (user) => set((state) => ({ users: [...state.users, user] })),
 
   updateUser: (updated) =>
     set((state) => ({
       users: state.users.map((u) => (u.id === updated.id ? updated : u)),
-      loggedUser: state.loggedUser?.id === updated.id ? updated : state.loggedUser,
     })),
   removeUser: (id) => {
     set((state) => ({
       users: state.users.filter((u) => u.id !== id),
-      loggedUser: state.loggedUser?.id === id ? null : state.loggedUser,
     }));
     // TODO: chamar delete na api para remover da base de dados
   },

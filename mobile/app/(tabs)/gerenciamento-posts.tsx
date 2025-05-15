@@ -13,17 +13,12 @@ export default function gerenciamento() {
     navigation.setOptions({ title: "Gerenciamento de Posts" });
   });
 
-  const handleCriarPostPress = () => {};
-
   return (
     <SafeAreaView style={globalStyles.container}>
       <View>
         <Text style={globalStyles.mainTitle}>Gerenciamento de Posts</Text>
-        <Pressable
-          onPress={handleCriarPostPress}
-          style={({ pressed }) => [styles.pressable, pressed && styles.pressed]}
-        >
-          <Link href="/post/criar">
+        <Pressable style={({ pressed }) => [styles.pressable, pressed && styles.pressed]}>
+          <Link href="/post/criar/">
             <Text style={styles.text}>Criar post</Text>
           </Link>
         </Pressable>

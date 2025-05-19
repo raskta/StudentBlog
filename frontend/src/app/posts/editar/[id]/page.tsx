@@ -3,7 +3,7 @@
 import { FormField } from "@/app/components/CustomForm/components/FormField/FormField"
 import FormButton from "@/app/components/CustomForm/components/FormButton/FormButton"
 import { CustomForm } from "@/app/components/CustomForm/CustomForm"
-import { Post } from "@/../../shared/interfaces/post"
+import { Post } from "../../../../../../shared/interfaces/post"
 import { usePostStore } from "@/stores/post-store"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"

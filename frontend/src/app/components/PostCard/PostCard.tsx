@@ -1,4 +1,4 @@
-import { Post } from "@/../../shared/interfaces/post"
+import { Post } from "../../../../../shared/interfaces/post"
 import dayjs from "dayjs"
 import "dayjs/locale/pt-br"
 import Image from "next/image"

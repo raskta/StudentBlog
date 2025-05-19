@@ -1,6 +1,6 @@
 "use client"
 
-import { Post } from "@/../../shared/interfaces/post"
+import { Post } from "../../../../../shared/interfaces/post"
 import { usePostStore } from "@/stores/post-store"
 import { use, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"

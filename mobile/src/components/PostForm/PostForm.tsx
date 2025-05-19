@@ -71,6 +71,11 @@ export default function PostForm({ post }: PostFormProps) {
           conteudo: content,
         };
         await updatePost(post.id, updatedFields);
+        Toast.show({
+          type: "success",
+          text1: "Post atualizado",
+          text2: `${title} atualizado com sucesso`,
+        });
       } else {
         const data: CreatePostRequestFields = {
           titulo: title,
@@ -121,8 +126,10 @@ export default function PostForm({ post }: PostFormProps) {
         placeholder="Insira o conteúdo"
         keyboardType="default"
       />
+      {/* TODO: inserir a troca de autor na edição */}
       <InputField
         label="Autor"
+        onChangeValue={() => {}}
         value={author.nome}
         disabled
       />
@@ -159,7 +166,7 @@ export default function PostForm({ post }: PostFormProps) {
 const styles = StyleSheet.create({
   form: {
     gap: 24,
-    padding: 16,
+    paddingVertical: 24,
   },
   previewContainer: {
     marginTop: 8,

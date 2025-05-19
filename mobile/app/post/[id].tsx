@@ -67,7 +67,7 @@ export default function PostDetails() {
                 year: "numeric",
               })}
           </Text>
-          <Text accessibilityLabel="Autor do post">{post.usuario.nome}</Text>
+          {post.usuario && <Text accessibilityLabel="Autor do post">{post.usuario.nome}</Text>}
         </View>
 
         <View style={styles.info}>

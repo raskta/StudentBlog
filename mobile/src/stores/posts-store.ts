@@ -164,6 +164,9 @@ export const usePostsStore = create<PostsState>((set, get) => ({
         posts: state.posts.filter((post) => post.id !== id),
         filteredPosts: state.posts.filter((post) => post.id !== id),
       }));
-    } catch (error) {}
+    } catch (error) {
+      console.error("[PostsStore] Erro ao remover post");
+      throw error;
+    }
   },
 }));

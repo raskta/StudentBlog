@@ -1,10 +1,20 @@
-import { Image, Text, View } from "react-native";
-import PostList from "@/src/components/PostList/PostList";
+import { Image, StyleSheet, Text, View } from "react-native";
+import PostsList from "@/src/components/PostsList/PostList";
 import globalStyles from "../../src/theme/styles";
 import SearchBar from "@/src/components/SearchBar/SearchBar";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { usePostsStore } from "@/src/stores/posts-store";
+import { colors } from "@/src/theme/colors";
+import { useEffect } from "react";
 
 export default function Index() {
+  const posts = usePostsStore((s) => s.posts);
+  const fetchPosts = usePostsStore((s) => s.fetchPosts);
+
+  useEffect(() => {
+    fetchPosts();
+  }, [fetchPosts]);
+
   return (
     <SafeAreaView style={globalStyles.container}>
       {/* Header */}
@@ -20,10 +30,26 @@ export default function Index() {
       </View>
 
       {/* Barra de busca */}
-      <SearchBar />
+      {posts.length > 0 && <SearchBar />}
 
       {/* Posts */}
-      <PostList />
+      {posts.length > 0 ? (
+        <PostsList />
+      ) : (
+        <View style={styles.noPosts}>
+          <Text style={styles.noPostsText}>Não existem postagens para exibir</Text>
+        </View>
+      )}
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  noPosts: {
+    marginTop: 24,
+  },
+  noPostsText: {
+    fontSize: 18,
+    color: colors.darkBlue,
+  },
+});

@@ -8,7 +8,7 @@ export interface Post {
   urlimagem?: string;
   dtcriacao: Date;
   dtalteracao: Date;
-  usuario: User;
+  usuario: User | null;
   usuarioAlteracao: User;
   tituloslug?: string;
 }

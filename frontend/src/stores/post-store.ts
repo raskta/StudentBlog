@@ -1,4 +1,4 @@
-import { Post } from "@/interfaces/post"
+import { Post } from "@/../../shared/interfaces/post"
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 import kebabCase from "lodash.kebabcase"

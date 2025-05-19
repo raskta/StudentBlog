@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { User } from "../../../shared/interfaces/user";
-import UsersMock from "../mocks/users";
+const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
 type UsersState = {
   loading: boolean;
@@ -10,9 +10,9 @@ type UsersState = {
   fetchUsers: () => Promise<void>;
   getUserById: (id: number) => Promise<User | undefined>;
   getUserByEmail: (email: string) => Promise<User | undefined>;
-  addUser: (user: User) => void;
+  createUser: (user: Partial<User>) => void;
   updateUser: (updated: User) => void;
-  removeUser: (id: number) => void;
+  deleteUser: (id: number) => void;
 };
 
 export const useUsersStore = create<UsersState>((set, get) => ({
@@ -62,16 +62,52 @@ export const useUsersStore = create<UsersState>((set, get) => ({
     return freshUsers.find((u) => u.email === email);
   },
 
-  addUser: (user) => set((state) => ({ users: [...state.users, user] })),
+  createUser: (user) => {
+    return;
+  },
 
-  updateUser: (updated) =>
-    set((state) => ({
-      users: state.users.map((u) => (u.id === updated.id ? updated : u)),
-    })),
-  removeUser: (id) => {
-    set((state) => ({
-      users: state.users.filter((u) => u.id !== id),
-    }));
-    // TODO: chamar delete na api para remover da base de dados
+  updateUser: async (updated) => {
+    try {
+      const response = await fetch(`${API_URL}/users/${updated.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updated),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || `Erro ao editar usuário: ${updated.id} - ${updated.nome}`);
+      }
+
+      const updatedUser: User = await response.json();
+
+      set((state) => ({
+        users: state.users.map((u) => (u.id === updated.id ? updated : u)),
+      }));
+    } catch (error) {
+      console.error("Erro no updateUser:", error);
+      throw error;
+    }
+  },
+
+  deleteUser: async (id: number) => {
+    try {
+      const response = await fetch(`${API_URL}/users/${id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Erro ao excluir usuário");
+      }
+
+      set((state) => ({
+        users: state.users.filter((u) => u.id !== id),
+      }));
+    } catch (error) {
+      console.error("[UsersStore] Erro ao remover usuário");
+      throw error;
+    }
   },
 }));

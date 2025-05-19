@@ -1,29 +1,46 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { PaginatedList } from "../PaginatedList/PaginatedList";
-import mockUsers from "@/src/mocks/users";
 import { User } from "../../../../shared/interfaces/user";
 import UserCard from "./components/UserCard";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { useUsersStore } from "@/src/stores/users-store";
 import { useRouter } from "expo-router";
+import Toast from "react-native-toast-message";
 
-const TeachersList = () => {
+const UsersList = () => {
   const router = useRouter();
   const fetchUsers = useUsersStore((s) => s.fetchUsers);
   const loading = useUsersStore((s) => s.loading);
   const users = useUsersStore((s) => s.users);
+  const deleteUser = useUsersStore((s) => s.deleteUser);
 
   useEffect(() => {
     fetchUsers();
-  }, [fetchUsers, users]);
+  }, [fetchUsers]);
 
   const ItemSeparator = () => <View style={{ height: 16 }} />;
 
-  // User actions
   const handleEdit = (id: number) => {
     router.push(`/user/editar/${id}`);
   };
-  const handleDelete = () => {};
+
+  const handleDelete = (id: number, name: string) => {
+    Alert.alert(`Excluir usuário`, `Realmente deseja o usuário: "${id} - ${name}"`, [
+      { text: "Não", style: "cancel" },
+      {
+        text: "Sim",
+        onPress() {
+          deleteUser(id);
+          Toast.show({
+            type: "success",
+            text1: "Usuário removido",
+            text2: `${name} removido com sucesso`,
+          });
+        },
+        style: "destructive",
+      },
+    ]);
+  };
 
   return (
     <PaginatedList<User>
@@ -39,8 +56,8 @@ const TeachersList = () => {
             ativo={item.ativo}
             email={item.email}
             role={item.role}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
+            onEdit={() => handleEdit(item.id)}
+            onDelete={() => handleDelete(item.id, item.nome)}
           />
         );
       }}
@@ -49,4 +66,4 @@ const TeachersList = () => {
   );
 };
 
-export default TeachersList;
+export default UsersList;

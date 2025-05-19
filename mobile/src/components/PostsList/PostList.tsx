@@ -3,13 +3,15 @@ import { useEffect, useState } from "react";
 import { usePostsStore } from "@/src/stores/posts-store";
 import PostCard from "../PostCard/PostCard";
 import { Post } from "../../../../shared/interfaces/post";
+import { useUsersStore } from "@/src/stores/users-store";
 
 const ITEMS_PER_PAGE = 8;
 
-export default function PostList() {
+export default function PostsList() {
   const allPosts = usePostsStore((state) => state.filteredPosts);
   const loading = usePostsStore((state) => state.loading);
   const fetchPosts = usePostsStore((state) => state.fetchPosts);
+  const users = useUsersStore((s) => s.users);
 
   const [visiblePosts, setVisiblePosts] = useState<Post[]>([]);
   const [page, setPage] = useState(1);
@@ -17,7 +19,7 @@ export default function PostList() {
 
   useEffect(() => {
     fetchPosts();
-  }, [fetchPosts]);
+  }, [fetchPosts, users]);
 
   useEffect(() => {
     setVisiblePosts(allPosts.slice(0, ITEMS_PER_PAGE));

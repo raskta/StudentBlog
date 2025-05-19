@@ -6,20 +6,25 @@ import { colors } from "@/src/theme/colors";
 import styles from "./styles";
 import { styles as inputFieldStyles } from "@/src/components/InputField/styles";
 import SubmitButton from "../SubmitButton/SubmitButton";
+import { useUsersStore } from "@/src/stores/users-store";
+import Toast from "react-native-toast-message";
 
 type UserFormProps = {
-  user: User;
+  user?: Partial<User>;
 };
 
 type UserRole = "Aluno" | "Professor";
 
 const UserForm = ({ user }: UserFormProps) => {
-  const [name, setName] = useState(user.nome ?? "");
-  const [email, setEmail] = useState(user.email ?? "");
-  const [role, setRole] = useState<UserRole>(user.role ?? "Aluno");
-  const [active, setActive] = useState<boolean | null>(user.ativo || null);
+  const [name, setName] = useState(user?.nome ?? "");
+  const [email, setEmail] = useState(user?.email ?? "");
+  const [role, setRole] = useState<UserRole>(user?.role ?? "Aluno");
+  const [active, setActive] = useState<boolean>(user?.ativo ?? true);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [ativoDropdownVisible, setActiveDropdownVisible] = useState(false);
+  const updateUser = useUsersStore((s) => s.updateUser);
+  const createUser = useUsersStore((s) => s.createUser);
+  const fetchedUser = useUsersStore((s) => s.users.find((u) => u.id === user?.id));
 
   const toggleDropdown = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -32,10 +37,15 @@ const UserForm = ({ user }: UserFormProps) => {
   };
 
   const hasChangedFields = () => {
-    if (!user) return true;
-    return (
-      user.nome !== name || user.email !== email || user.role !== role || user.ativo !== active
-    );
+    if (user?.id) {
+      return (
+        fetchedUser?.nome !== name ||
+        fetchedUser?.email !== email ||
+        fetchedUser?.role !== role ||
+        fetchedUser?.ativo !== active
+      );
+    }
+    return name.trim() !== "" && email.trim() !== "";
   };
 
   const handleSelectRole = (value: UserRole) => {
@@ -49,20 +59,80 @@ const UserForm = ({ user }: UserFormProps) => {
     setActiveDropdownVisible(false);
   };
 
-  // TODO: conectar com api edição usuário
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    try {
+      // edição
+      if (user?.id) {
+        if (!hasChangedFields()) return;
+
+        const updatedUser: User = {
+          id: user.id,
+          nome: name,
+          email,
+          role,
+          ativo: active,
+        };
+
+        await updateUser(updatedUser);
+        Toast.show({
+          type: "success",
+          text1: "Usuário atualizado",
+          text2: `${name} atualizado com sucesso`,
+        });
+      } else {
+        // criação
+        if (!name.trim() && !email.trim()) {
+          Toast.show({
+            type: "error",
+            text1: "Campo obrigatório",
+            text2: "Preencha o nome para continuar",
+          });
+          return;
+        }
+
+        const newUser = {
+          nome: name,
+          email,
+          role,
+          ativo: active,
+        };
+
+        await createUser(newUser);
+        Toast.show({
+          type: "success",
+          text1: "Usuário criado",
+          text2: `${name} criado com sucesso`,
+        });
+
+        // Reset do form
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+        setName("");
+        setEmail("");
+        setRole("Aluno");
+        setActive(true);
+      }
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: user?.id ? "Erro ao atualizar" : "Erro ao criar",
+        text2: String(error),
+      });
+    }
+  };
 
   return (
     <ScrollView
       contentContainerStyle={styles.form}
       showsVerticalScrollIndicator={false}
     >
-      <View>
-        <Text style={inputFieldStyles.label}>ID</Text>
-        <View style={[inputFieldStyles.inputField, inputFieldStyles.disabledInput]}>
-          <Text>{user.id}</Text>
+      {user?.id && (
+        <View>
+          <Text style={inputFieldStyles.label}>ID</Text>
+          <View style={[inputFieldStyles.inputField, inputFieldStyles.disabledInput]}>
+            <Text>{user.id}</Text>
+          </View>
         </View>
-      </View>
+      )}
       <InputField
         label="Nome *"
         value={name}
@@ -134,7 +204,7 @@ const UserForm = ({ user }: UserFormProps) => {
       <SubmitButton
         label={user ? "Atualizar usuário" : "Criar usuário"}
         onPress={handleSubmit}
-        disabled={!hasChangedFields()}
+        disabled={user?.id ? !hasChangedFields() : !name.trim()}
       />
     </ScrollView>
   );

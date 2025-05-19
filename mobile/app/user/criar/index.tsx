@@ -1,18 +1,21 @@
-import PostForm from "@/src/components/PostForm/PostForm";
+import UserForm from "@/src/components/UserForm/UserForm";
 import globalStyles from "@/src/theme/styles";
 import { useNavigation } from "expo-router";
 import { useEffect } from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function CreatePost() {
+const CreateUserScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    navigation.setOptions({ title: "Criar post" });
+    navigation.setOptions({ title: "Criar Usuário" });
   });
+
   return (
     <SafeAreaView style={globalStyles.container}>
-      <PostForm />
+      <UserForm />
     </SafeAreaView>
   );
-}
+};
+
+export default CreateUserScreen;

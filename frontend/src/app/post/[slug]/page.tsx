@@ -1,6 +1,6 @@
 "use client"
 
-import { Post } from "@/interfaces/post"
+import { Post } from "@/../../shared/interfaces/post"
 import { usePostStore } from "@/stores/post-store"
 import { use, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -24,7 +24,6 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
       const postFound = await getPostBySlug(slug)
 
       if (!postFound) {
-        // TODO: throw 404 caso o post não seja encontrado
         setLoading(false)
       }
 
@@ -46,8 +45,10 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
   const data = dayjs(post?.dtcriacao)
   const dataFormatada = data.format("DD [de] MMMM [de] YYYY")
 
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-  const imageUrl = post.urlimagem?.startsWith("/uploads") ? `${baseUrl}${post.urlimagem}` : post.urlimagem;
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
+  const imageUrl = post.urlimagem?.startsWith("/uploads")
+    ? `${baseUrl}${post.urlimagem}`
+    : post.urlimagem
 
   return (
     <main>
@@ -68,7 +69,7 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
             >
               {dataFormatada}
             </time>
-            <p>{post?.usuario.nome}</p>
+            <p>{post?.usuario?.nome}</p>
           </div>
           <div className="space-y-3">
             <h1 className="text-main-dark-blue text-3xl font-semibold tracking-wide">
@@ -77,8 +78,8 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
             <p className="font-normal">{post?.subtitulo}</p>
           </div>
         </section>
-         {}
-         <div className="flex justify-center pt-4">
+        {}
+        <div className="flex justify-center pt-4">
           <Image
             src={
               imageUrl ||
@@ -86,7 +87,7 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
             }
             width={512}
             height={306}
-            className="h-auto max-h-96 w-auto max-w-full object-cover rounded-lg"
+            className="h-auto max-h-96 w-auto max-w-full rounded-lg object-cover"
             alt={`Imagem que representa postagem ${post.titulo}`}
             unoptimized // 🔥 Importante para evitar restrições do Next.js com imagens externas
           />

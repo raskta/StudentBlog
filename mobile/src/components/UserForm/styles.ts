@@ -2,8 +2,9 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   form: {
-    marginTop: 20,
     gap: 16,
+    flex: 1,
+    paddingVertical: 24,
   },
 });
 

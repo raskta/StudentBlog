@@ -8,9 +8,10 @@ import Image from "next/image"
 import notFound from "@/app/not-found"
 import Link from "next/link"
 import { Post } from "@/@interfaces/post"
+import { ArrowLeftIcon } from "lucide-react"
 
 export default function PostDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = use(params) // Correção: recebe params diretamente
+  const { slug } = use(params)
   const router = useRouter()
   dayjs.locale("pt-br")
   const { getPostBySlug, fetchPosts } = usePostStore()
@@ -52,12 +53,12 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
 
   return (
     <main>
-      <div className="flex justify-end p-4">
+      <div className="flex p-4">
         <Link
           href="/"
-          className="text-main-dark-blue font-normal hover:underline"
+          className="text-main-dark-blue flex items-center gap-1 font-normal hover:underline"
         >
-          ← Voltar
+          <ArrowLeftIcon size={18} /> Voltar
         </Link>
       </div>
       <article>

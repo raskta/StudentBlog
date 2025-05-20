@@ -58,7 +58,7 @@ export default function EditarPostPage({ params }: { params: Promise<{ id: strin
         toast.error(error instanceof Error ? error.message : "Erro desconhecido")
       }
     } else {
-      toast.warning("Nenhum campo foi alterado, por favor altere algo e tente novamente", {
+      toast.warning("Nenhum campo foi alterado, realize alguma alteração e tente novamente.", {
         closeButton: true,
       })
     }

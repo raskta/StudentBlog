@@ -1,8 +1,8 @@
-import { Post } from "@/interfaces/post";
-import dayjs from "dayjs";
-import "dayjs/locale/pt-br";
-import Image from "next/image";
-import Link from "next/link";
+import { Post } from "@/@interfaces/post"
+import dayjs from "dayjs"
+import "dayjs/locale/pt-br"
+import Image from "next/image"
+import Link from "next/link"
 
 export default function PostCard({
   titulo,
@@ -12,11 +12,11 @@ export default function PostCard({
   urlimagem,
   tituloslug,
 }: Partial<Post>) {
-  const data = dayjs(dtcriacao).locale("pt-br");
-  const dataFormatada = data.format("DD [de] MMMM [de] YYYY");
+  const data = dayjs(dtcriacao).locale("pt-br")
+  const dataFormatada = data.format("DD [de] MMMM [de] YYYY")
 
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-  const imageUrl = urlimagem?.startsWith("/uploads") ? `${baseUrl}${urlimagem}` : urlimagem;
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
+  const imageUrl = urlimagem?.startsWith("/uploads") ? `${baseUrl}${urlimagem}` : urlimagem
 
   return (
     <div className="block h-fit min-h-96 w-xs rounded-3xl md:w-full">
@@ -26,7 +26,10 @@ export default function PostCard({
         title={`Ver postagem: ${titulo}`}
       >
         <Image
-          src={imageUrl || "https://s.france24.com/media/display/e6279b3c-db08-11ee-b7f5-005056bf30b7/w:1280/p:16x9/news_en_1920x1080.jpg"}
+          src={
+            imageUrl ||
+            "https://s.france24.com/media/display/e6279b3c-db08-11ee-b7f5-005056bf30b7/w:1280/p:16x9/news_en_1920x1080.jpg"
+          }
           width={392}
           height={207}
           className="h-64 w-full rounded-3xl object-cover"
@@ -47,5 +50,5 @@ export default function PostCard({
         <div className="flex items-center gap-1"></div>
       </div>
     </div>
-  );
+  )
 }

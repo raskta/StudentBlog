@@ -1,6 +1,5 @@
 "use client"
 
-import { Post } from "@/interfaces/post"
 import { usePostStore } from "@/stores/post-store"
 import { use, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -8,10 +7,11 @@ import dayjs from "dayjs"
 import Image from "next/image"
 import notFound from "@/app/not-found"
 import Link from "next/link"
+import { Post } from "@/@interfaces/post"
 import { ArrowLeftIcon } from "lucide-react"
 
 export default function PostDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = use(params) // Correção: recebe params diretamente
+  const { slug } = use(params)
   const router = useRouter()
   dayjs.locale("pt-br")
   const { getPostBySlug, fetchPosts } = usePostStore()
@@ -25,7 +25,6 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
       const postFound = await getPostBySlug(slug)
 
       if (!postFound) {
-        // TODO: throw 404 caso o post não seja encontrado
         setLoading(false)
       }
 
@@ -71,7 +70,7 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
             >
               {dataFormatada}
             </time>
-            <p>{post?.usuario.nome}</p>
+            <p>{post?.usuario?.nome}</p>
           </div>
           <div className="space-y-3">
             <h1 className="text-main-dark-blue text-3xl font-semibold tracking-wide">

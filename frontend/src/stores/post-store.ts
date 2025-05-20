@@ -1,8 +1,8 @@
-import { Post } from "@/interfaces/post"
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 import kebabCase from "lodash.kebabcase"
 import { Inputs } from "@/app/posts/criar/page"
+import { Post } from "@/@interfaces/post"
 
 export enum RequestStatus {
   IDLE = "idle",

@@ -3,13 +3,13 @@
 import { FormField } from "@/app/components/CustomForm/components/FormField/FormField"
 import FormButton from "@/app/components/CustomForm/components/FormButton/FormButton"
 import { CustomForm } from "@/app/components/CustomForm/CustomForm"
-import { Post } from "@/interfaces/post"
 import { usePostStore } from "@/stores/post-store"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { use, useEffect, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { toast } from "sonner"
+import { Post } from "@/@interfaces/post"
 
 export default function EditarPostPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)

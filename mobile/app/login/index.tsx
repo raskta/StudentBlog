@@ -5,6 +5,7 @@ import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
 import { useAuth } from "@/src/hooks/useAuth";
 import { ApiRequestError } from "../../../shared/interfaces/error";
+import { Ionicons } from "@expo/vector-icons";
 
 import styles from "./styles";
 import globalStyles from "@/src/theme/styles";
@@ -51,6 +52,18 @@ export default function LoginScreen() {
 
   return (
     <SafeAreaView style={styles.loginContainer}>
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => router.push("/")}
+      >
+        <Ionicons
+          name="arrow-back"
+          size={24}
+          color="#172554"
+        />
+        <Text style={styles.backButtonText}></Text>
+      </TouchableOpacity>
+
       <View>
         <Text style={globalStyles.mainTitle}>Login</Text>
       </View>

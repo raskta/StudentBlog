@@ -32,6 +32,19 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
+  backButton: {
+    position: "absolute",
+    top: 60,
+    left: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
+  },
+  backButtonText: {
+    marginLeft: 8,
+    fontSize: 16,
+    color: "#172554",
+  },
 });
 
 export default styles;

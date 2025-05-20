@@ -21,11 +21,15 @@ export default function AppLayout() {
 
     const currentSegment = segments[0];
 
-    const publicSegments = ["(tabs)/", "(tabs)/login"];
+    // Define public routes
+    const publicRoutes = ["(tabs)"];
+    const protectedRoutes = ["(tabs)/gerenciamento-posts", "(tabs)/gerenciamento-usuarios", "post/criar", "post/editar", "user/criar", "user/editar"];
 
-    const isPublic = publicSegments.includes(currentSegment);
+    // Check if current route is protected
+    const isProtected = protectedRoutes.some((route) => segments.join("/").includes(route));
+    const isPublic = publicRoutes.includes(currentSegment);
 
-    if (!token && !isPublic) {
+    if (!token && isProtected) {
       router.replace("/login");
     }
   }, [segments, token, ready]);

@@ -1,7 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, JoinColumn } from 'typeorm';
-import { User } from '../../users/models/users.models';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+  JoinColumn,
+} from "typeorm";
+import { User } from "../../users/models/users.models";
 
-@Entity('posts')
+@Entity("posts")
 export class Post {
   @PrimaryGeneratedColumn()
   id!: number;
@@ -12,18 +20,18 @@ export class Post {
   @Column({ nullable: true })
   subtitulo?: string;
 
-  @Column('text')
+  @Column("text")
   conteudo!: string;
 
   @Column({ nullable: true })
   urlimagem?: string;
 
   @ManyToOne(() => User, (user) => user.id, { nullable: true })
-  @JoinColumn({ name: 'idusuario' })
+  @JoinColumn({ name: "idusuario" })
   usuario: User | null;
 
   @ManyToOne(() => User, (user) => user.id, { nullable: true })
-  @JoinColumn({ name: 'idusuarioalter' })
+  @JoinColumn({ name: "idusuarioalter" })
   usuarioAlteracao?: User;
 
   @CreateDateColumn()

@@ -2,7 +2,7 @@ import { CustomError } from "../../../shared/error/custom.error";
 import { UserDto } from "../dto/users.dto";
 import {
   createUser,
-  deleteUserAndUnlinkPosts,
+  deleteUser,
   getUserByEmail,
   getUserById,
   getUsers,
@@ -45,7 +45,7 @@ class UserService {
 
   async delete(id: number) {
     await this.getById(id);
-    await deleteUserAndUnlinkPosts(id);
+    await deleteUser(id);
     return { message: `Usuário com id ${id} deletado com sucesso` };
   }
 }

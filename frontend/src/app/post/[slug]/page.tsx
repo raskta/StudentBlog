@@ -1,6 +1,5 @@
 "use client"
 
-import { Post } from "../../../../../shared/interfaces/post"
 import { usePostStore } from "@/stores/post-store"
 import { use, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -8,6 +7,7 @@ import dayjs from "dayjs"
 import Image from "next/image"
 import notFound from "@/app/not-found"
 import Link from "next/link"
+import { Post } from "@/@interfaces/post"
 
 export default function PostDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params) // Correção: recebe params diretamente

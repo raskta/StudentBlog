@@ -44,7 +44,7 @@ npm install
 
 4. Suba o Backend realizando build com o Docker Compose
     ```bash
-     docker compose up --build
+     docker compose up --build app
     ```
 
 5. Navegue até o diretório mobile
@@ -59,6 +59,8 @@ npm install
 
 7. Inicie o servidor de desenvolvimento
 ```bash
+npm start
+ou
 npm run start
 ```
 

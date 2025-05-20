@@ -1,13 +1,6 @@
 import { CustomError } from "../../../shared/error/custom.error";
 import { UserDto } from "../dto/users.dto";
-import {
-  createUser,
-  deleteUserAndUnlinkPosts,
-  getUserByEmail,
-  getUserById,
-  getUsers,
-  updateUser,
-} from "../repository/users.repository";
+import { createUser, deleteUser, getUserByEmail, getUserById, getUsers, updateUser } from "../repository/users.repository";
 
 class UserService {
   async get() {
@@ -30,8 +23,8 @@ class UserService {
 
   async create(user: UserDto) {
     const userData = await this.getByEmail(user.email);
-    if (userData) {
-      throw new CustomError(`Usuário com email ${user.email} já existe`, 400);
+    if(userData){
+        throw new CustomError(`Usuário com email ${user.email} já existe`, 400);
     }
     const newUser = await createUser(user);
     return newUser;
@@ -39,13 +32,13 @@ class UserService {
 
   async update(id: number, user: UserDto) {
     await this.getById(id);
-    const updatedUser = await updateUser(id, user);
+    const updatedUser = await updateUser(id,user);
     return updatedUser;
   }
 
   async delete(id: number) {
     await this.getById(id);
-    await deleteUserAndUnlinkPosts(id);
+    await deleteUser(id);
     return { message: `Usuário com id ${id} deletado com sucesso` };
   }
 }

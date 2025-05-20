@@ -18,9 +18,9 @@ export class Post {
   @Column({ nullable: true })
   urlimagem?: string;
 
-  @ManyToOne(() => User, (user) => user.id, { nullable: true })
+  @ManyToOne(() => User, (user) => user.id, { nullable: false })
   @JoinColumn({ name: 'idusuario' })
-  usuario: User | null;
+  usuario!: User;
 
   @ManyToOne(() => User, (user) => user.id, { nullable: true })
   @JoinColumn({ name: 'idusuarioalter' })

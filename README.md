@@ -5,4 +5,5 @@ Essa é uma aplicação desenvolvida para fins estudantis referentes a pós-grad
 
 - [Backend](/backend/)
 - [Frontend](/frontend/)
+- [Mobile](/mobile/)
 

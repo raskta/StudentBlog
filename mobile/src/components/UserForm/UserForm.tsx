@@ -73,7 +73,7 @@ const UserForm = ({ user }: UserFormProps) => {
           ativo: active,
         };
 
-        await updateUser(updatedUser);
+        updateUser(updatedUser);
         Toast.show({
           type: "success",
           text1: "Usuário atualizado",
@@ -97,7 +97,7 @@ const UserForm = ({ user }: UserFormProps) => {
           ativo: active,
         };
 
-        await createUser(newUser);
+        createUser(newUser);
         Toast.show({
           type: "success",
           text1: "Usuário criado",

@@ -44,7 +44,7 @@ export const usePostsStore = create<PostsState>((set, get) => ({
     const { posts } = get();
     const filtered = term
       ? posts.filter((post) =>
-          [post.titulo, post.subtitulo, post.usuario.nome]
+          [post.titulo, post.subtitulo, post.usuario?.nome]
             .filter(Boolean)
             .some((field) => field?.toLowerCase().includes(term.toLowerCase()))
         )
@@ -91,12 +91,14 @@ export const usePostsStore = create<PostsState>((set, get) => ({
   },
 
   createPost: async (data: CreatePostRequestFields): Promise<Post> => {
-    const { posts } = get();
-    posts.forEach((post) => {
-      if (post.titulo === data.titulo || post.conteudo === data.conteudo) {
-        throw new Error("Post com esse título e/ou conteúdo já existe");
-      }
-    });
+    const { posts, filteredPosts } = get();
+
+    const duplicate = posts.some(
+      (post) => post.titulo === data.titulo || post.conteudo === data.conteudo
+    );
+    if (duplicate) {
+      throw new Error("Já existe um post com esse título ou conteúdo");
+    }
 
     const response = await fetch(`${API_URL}/posts`, {
       method: "POST",
@@ -105,16 +107,23 @@ export const usePostsStore = create<PostsState>((set, get) => ({
     });
 
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || "Erro ao criar o post");
+      let msg = "Erro ao criar o post";
+      try {
+        const err = await response.json();
+        msg = err.message || msg;
+      } catch {}
+      throw new Error(msg);
     }
 
     const createdPost = await response.json();
 
-    set((state) => ({
-      posts: [...state.posts, createdPost],
-      filteredPosts: [...state.posts, createdPost],
-    }));
+    set((state) => {
+      const newPosts = [...state.posts, createdPost];
+      return {
+        posts: newPosts,
+        filteredPosts: [...state.filteredPosts, createdPost], // ou newPosts, se quiser zerar o filtro
+      };
+    });
 
     return createdPost;
   },

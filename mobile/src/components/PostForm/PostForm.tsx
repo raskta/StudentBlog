@@ -1,12 +1,13 @@
-import { ScrollView, StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
+import { ScrollView } from "react-native";
 import { Post } from "../../../../shared/interfaces/post";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputField from "../InputField/InputField";
 import Toast from "react-native-toast-message";
-import { pickImage } from "@/src/utils/pickImage";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import { CreatePostRequestFields, usePostsStore } from "@/src/stores/posts-store";
 import { useAuthStore } from "@/src/stores/auth-store";
+import { styles } from "./styles";
+import { useRouter } from "expo-router";
 
 type PostFormProps = {
   post?: Partial<Post>;
@@ -14,10 +15,11 @@ type PostFormProps = {
 
 export default function PostForm({ post }: PostFormProps) {
   const loggedUser = useAuthStore((s) => s.loggedUser);
+  const router = useRouter();
   const [title, onChangeTitle] = useState(post?.titulo ?? "");
   const [subtitle, onChangeSubtitle] = useState(post?.subtitulo ?? "");
   const [content, onChangeContent] = useState(post?.conteudo ?? "");
-  const [author, onChangeAuthor] = useState(post?.usuario ?? loggedUser!);
+  const [author, setAuthor] = useState(post?.usuario);
   const [image, setImage] = useState<{
     uri: string;
     type: string;
@@ -25,6 +27,10 @@ export default function PostForm({ post }: PostFormProps) {
   } | null>(null);
 
   const { createPost, updatePost } = usePostsStore();
+
+  useEffect(() => {
+    author ?? setAuthor(loggedUser);
+  }, [loggedUser, author, post]);
 
   const hasChangedFields = () => {
     if (!post) return true;
@@ -34,23 +40,6 @@ export default function PostForm({ post }: PostFormProps) {
       post.conteudo !== content ||
       image != null
     );
-  };
-
-  const handlePickImage = async () => {
-    const result = await pickImage();
-
-    if (!result.success) {
-      Toast.show({
-        type: "error",
-        text1: "Erro na seleção",
-        text2: result.error || "Erro desconhecido",
-      });
-      return;
-    }
-
-    if (result.image) {
-      setImage(result.image);
-    }
   };
 
   const handleSubmit = async () => {
@@ -65,39 +54,49 @@ export default function PostForm({ post }: PostFormProps) {
 
     try {
       if (post?.id) {
-        const updatedFields: Record<string, any> = {
+        const updatePayload: Partial<CreatePostRequestFields> = {
           titulo: title,
           subtitulo: subtitle,
           conteudo: content,
         };
-        await updatePost(post.id, updatedFields);
+
+        await updatePost(post.id, updatePayload);
+
         Toast.show({
           type: "success",
           text1: "Post atualizado",
-          text2: `${title} atualizado com sucesso`,
+          text2: `“${title}” atualizado com sucesso`,
         });
       } else {
-        const data: CreatePostRequestFields = {
+        const createPayload: CreatePostRequestFields = {
           titulo: title,
           subtitulo: subtitle,
           conteudo: content,
-          idusuario: author.id.toString(),
+          idusuario: author!.id.toString(),
           imagem: "",
         };
 
-        try {
-          const createdPost = await createPost(data);
+        const createdPost = await createPost(createPayload);
 
-          Toast.show({
-            type: "success",
-            text1: "Post criado",
-            text2: `${createdPost?.titulo} criado com sucesso`,
-          });
-        } catch (error: any) {
-          throw new Error("Erro ao criar post:", error);
-        }
+        Toast.show({
+          type: "success",
+          text1: "Post criado",
+          text2: `“${createdPost.titulo}” criado com sucesso`,
+        });
+
+        router.replace("/(tabs)/gerenciamento-posts");
       }
-    } catch (error) {}
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Erro desconhecido, tente novamente";
+
+      console.error("[PostForm] handleSubmit:", err);
+
+      Toast.show({
+        type: "error",
+        text1: post?.id ? "Erro ao atualizar post" : "Erro ao criar post",
+        text2: message,
+      });
+    }
   };
 
   return (
@@ -126,34 +125,14 @@ export default function PostForm({ post }: PostFormProps) {
         placeholder="Insira o conteúdo"
         keyboardType="default"
       />
-      {/* TODO: inserir a troca de autor na edição */}
-      <InputField
-        label="Autor"
-        onChangeValue={() => {}}
-        value={author.nome}
-        disabled
-      />
-      <View>
-        <TouchableOpacity
-          style={styles.imageButton}
-          onPress={handlePickImage}
-          activeOpacity={0.7}
-        >
-          <Text style={styles.buttonText}>📷 Selecionar Imagem</Text>
-        </TouchableOpacity>
-
-        {image ? (
-          <View style={styles.previewContainer}>
-            <Text>Pré-visualização:</Text>
-            <Image
-              source={{ uri: image.uri }}
-              style={styles.previewImage}
-            />
-          </View>
-        ) : (
-          <Text style={styles.noImageText}>Nenhuma imagem selecionada</Text>
-        )}
-      </View>
+      {author && (
+        <InputField
+          label="Autor"
+          onChangeValue={() => {}}
+          value={author.nome}
+          disabled
+        />
+      )}
       <SubmitButton
         label={post ? "Atualizar Post" : "Criar Post"}
         onPress={handleSubmit}
@@ -162,43 +141,3 @@ export default function PostForm({ post }: PostFormProps) {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  form: {
-    gap: 24,
-    paddingVertical: 24,
-  },
-  previewContainer: {
-    marginTop: 8,
-    alignItems: "center",
-  },
-  previewImage: {
-    width: 200,
-    height: 200,
-    marginTop: 8,
-    borderRadius: 8,
-  },
-  noImageText: {
-    color: "#666",
-    textAlign: "center",
-    marginTop: 8,
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  imageButton: {
-    backgroundColor: "#60a5fa",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 3,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-  },
-});

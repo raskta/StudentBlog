@@ -2,21 +2,7 @@ import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
 import { Post } from "../../../shared/interfaces/post";
 import { usePostsStore } from "@/src/stores/posts-store";
-import {
-  ActivityIndicator,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  View,
-  Image,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
-
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
-const IMAGE_HORIZONTAL_PADDING = 16 * 2;
-const IMAGE_WIDTH = SCREEN_WIDTH - IMAGE_HORIZONTAL_PADDING;
-const IMAGE_HEIGHT = (IMAGE_WIDTH * 9) / 16;
+import { ActivityIndicator, SafeAreaView, ScrollView, Text, View, StyleSheet } from "react-native";
 
 export default function PostDetails() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -73,13 +59,6 @@ export default function PostDetails() {
         <View style={styles.info}>
           <Text style={styles.title}>{post.titulo}</Text>
           <Text style={styles.subtitle}>{post.subtitulo}</Text>
-          <Image
-            source={require("@/src/assets/images/test.jpg")}
-            style={styles.image}
-            resizeMode="cover"
-            accessibilityRole="image"
-            accessibilityLabel="Imagem do post"
-          />
         </View>
 
         <View style={styles.content}>
@@ -134,12 +113,6 @@ const styles = StyleSheet.create({
     color: "#3f3f46",
     textAlign: "center",
     marginVertical: 8,
-  },
-  image: {
-    width: IMAGE_WIDTH,
-    height: IMAGE_HEIGHT,
-    borderRadius: 10,
-    marginTop: 12,
   },
   content: {
     marginTop: 16,

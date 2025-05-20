@@ -82,5 +82,5 @@ export function PaginatedList<T>({
 }
 
 const styles = StyleSheet.create({
-  list: { paddingBottom: 16 },
+  list: { marginVertical: 16, flex: 1 },
 });

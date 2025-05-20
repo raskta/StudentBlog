@@ -38,7 +38,11 @@ export default function InputField({
         onChangeText={(text) => {
           onChangeValue && onChangeValue(text);
         }}
-        style={[styles.inputField, isFocused && styles.inputFieldFocused]}
+        style={[
+          styles.inputField,
+          isFocused && styles.inputFieldFocused,
+          disabled && styles.disabledInput,
+        ]}
         placeholder={placeholder}
         keyboardType={keyboardType}
         onFocus={() => setIsFocused(true)}

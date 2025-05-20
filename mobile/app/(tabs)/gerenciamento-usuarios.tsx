@@ -17,15 +17,7 @@ export default function GerenciamentoUsuarios() {
           <CreateButton label="Criar Usuário" />
         </Link>
       </View>
-      <View style={styles.list}>
-        <UsersList />
-      </View>
+      <UsersList />
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  list: {
-    marginTop: 16,
-  },
-});

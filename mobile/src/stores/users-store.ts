@@ -62,8 +62,28 @@ export const useUsersStore = create<UsersState>((set, get) => ({
     return freshUsers.find((u) => u.email === email);
   },
 
-  createUser: (user) => {
-    return;
+  createUser: async (user) => {
+    try {
+      const response = await fetch(`${API_URL}/users/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || `Erro ao criar usuário`);
+      }
+
+      const createdUser: User = await response.json();
+
+      set((s) => ({ users: [...s.users, createdUser] }));
+
+      return createdUser;
+    } catch (error) {
+      console.error("Erro no createUser:", error);
+      throw error;
+    }
   },
 
   updateUser: async (updated) => {

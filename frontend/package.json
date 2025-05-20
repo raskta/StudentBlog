@@ -1,0 +1,47 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "4.0.0",
+    "@tailwindcss/postcss": "4.0.1",
+    "bcrypt": "5.1.1",
+    "cookie": "1.0.2",
+    "dayjs": "1.11.13",
+    "dotenv": "16.4.7",
+    "jose": "6.0.8",
+    "jsonwebtoken": "9.0.2",
+    "lodash.kebabcase": "4.1.1",
+    "lucide-react": "0.474.0",
+    "next": "15.1.7",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "7.54.2",
+    "sonner": "1.7.4",
+    "yup": "1.6.1",
+    "zustand": "5.0.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "3",
+    "@tanstack/eslint-plugin-query": "5.66.0",
+    "@types/bcrypt": "5.0.2",
+    "@types/jsonwebtoken": "9.0.9",
+    "@types/lodash.kebabcase": "4.1.9",
+    "@types/node": "20",
+    "@types/react": "18",
+    "@types/react-dom": "18",
+    "eslint": "9",
+    "eslint-config-next": "15.1.6",
+    "postcss": "8.5.1",
+    "prettier": "3.4.2",
+    "prettier-plugin-tailwindcss": "0.6.11",
+    "tailwindcss": "4.0.0",
+    "typescript": "5"
+  }
+}

@@ -111,18 +111,26 @@ mobile/
 ## 🚸 Guia de uso
 
 ### Página inicial
-Na página inicial, é apresentado todos os posts cadastrados, onde qualquer usuário pode acessar, seja autenticado ou não, podendo também acessar a página de detalhamento do post ao clicar sobre o card da postagem.
+Na página inicial, é apresentado todos os posts cadastrados, onde qualquer usuário pode acessar, seja autenticado ou não, podendo também acessar a página de detalhamento do post ao clicar sobre o post.
 
 ### Página Detalhamento de Post
-Na página de detalhamento, é possível visualizar a data da postagem, autor da postagem, imagem caso tenha, título, subtítulo e o conteúdo da publicação
+Na página de detalhamento, é possível visualizar a data da postagem, autor da postagem, título, subtítulo e o conteúdo da publicação
 
-### Página de Gerenciamento de conteúdo
-Na aba de navegação, é possível navegar para a página de "Gerenciamento", onde são gerenciadas todas as postagens, para acessar essa página é necessário estar autenticado, caso não esteja, será direcionado para a página de <u>[Login](#página-de-login)</u>
+### Página de Gerenciamento de posts
+Na página de aba de navegação, é possível navegar para a página de "Gerenciamento", onde são gerenciadas todas as postagens, para acessar essa página é necessário estar autenticado, caso não esteja, será direcionado para a página de <u>[Login](#página-de-login)</u>
 
 Nessa página de gerenciamento, é apresentado um botão para criar novas postagens, assim como uma tabela contendo todas as publicações, com botões ao lado de cada linha, com a opção de editar o post específico ou excluí-lo.
 
 - Para editar o post, você será redirecionado para a página de edição do post
 - Para excluir o post, você clicará no ícone de lixeira, aparecerá uma notificação para confirmar a sua escolha, podendo ser cancelada ou confirmada 
+
+### Página de Gerenciamento de usuários
+Na página de aba de navegação, é possível navegar para a página de "Gerenciamento", onde são gerenciadas todos os usuários, para acessar essa página é necessário estar autenticado, caso não esteja, será direcionado para a página de <u>[Login](#página-de-login)</u>
+
+Nessa página de gerenciamento, é apresentado um botão para criar novos usuários, assim como uma tabela contendo todos os usuários, com botões ao lado de cada linha, com a opção de editar o usuário específico ou excluí-lo.
+
+- Para editar o usuário, você será redirecionado para a página de edição do usuário
+- Para excluir o usuário, você clicará no ícone de lixeira, aparecerá uma notificação para confirmar a sua escolha, podendo ser cancelada ou confirmada 
 
 ### Página de Login
 Formulário para realizar login, onde o campo de usuário é o <b>Email do usuário</b> e a senha é o <b>id do usuário</b> que seria informado pela equipe de sistema

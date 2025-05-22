@@ -11,7 +11,7 @@ export default function gerenciamento() {
   const navigation = useNavigation();
 
   useEffect(() => {
-    navigation.setOptions({ title: "Gerenciamento de Posts" });
+    navigation.setOptions({ title: "Posts" });
   });
 
   return (

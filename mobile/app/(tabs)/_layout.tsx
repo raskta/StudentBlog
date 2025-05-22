@@ -11,7 +11,11 @@ type TabConfig = {
   icon: React.ComponentProps<typeof Ionicons>["name"];
 };
 
-const tabs: TabConfig[] = [{ name: "index", title: "Home", icon: "home-outline" }];
+const tabs: TabConfig[] = [
+  { name: "index", title: "Home", icon: "home-outline" },
+  { name: "gerenciamento-posts", title: "Posts", icon: "document-text-outline" },
+  { name: "gerenciamento-usuarios", title: "Usuários", icon: "people-outline" },
+];
 
 export default function TabsLayout() {
   const { logout } = useAuthStore();

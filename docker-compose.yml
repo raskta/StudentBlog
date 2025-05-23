@@ -1,41 +1,83 @@
+version: '3.8'
+
 services:
-  app:
-    build: ./backend
-    image: studentblog-app:latest
-    container_name: app_blogging
+  # Auth Service
+  auth-service:
+    build: ./auth-service
     ports:
-      - "${APP_PORT}:3000"
+      - "3001:3001"
     environment:
-      DATABASE_URL: "postgresql://${DB_USER}:${DB_PASSWORD}@database:5432/${DB_DATABASE}"
-    env_file:
-      - .env
+      - PORT=3001
+      - JWT_SECRET=5up3r_53cr3t@k3y!dEv_2024_XyZ
+      - DATABASE_URL=postgresql://postgres:postgres@auth-db:5432/auth_db
     depends_on:
-      - database
+      - auth-db
 
-  database:
-    image: postgres
-    container_name: database_blogging
-    ports:
-      - "${DB_PORT}:5432"
+  auth-db:
+    image: postgres:latest
     environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_DB: auth_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - auth-db-data:/var/lib/postgresql/data
 
-  frontend:
-    build: ./frontend
-    container_name: frontend_blogging
+  # User Service
+  user-service:
+    build: ./user-service
     ports:
-      - "${FRONTEND_PORT}:3001"
-    depends_on:
-      - app
+      - "3002:3002"
     environment:
-      NEXT_PUBLIC_API_URL: "http://app:3000"
-    env_file:
-      - .env
+      - PORT=3002
+      - DATABASE_URL=postgresql://postgres:postgres@user-db:5432/user_db
+    depends_on:
+      - user-db
+
+  user-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: user_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - user-db-data:/var/lib/postgresql/data
+
+  # Post Service
+  post-service:
+    build: ./post-service
+    ports:
+      - "3003:3003"
+    environment:
+      - PORT=3003
+      - DATABASE_URL=postgresql://postgres:postgres@post-db:5432/post_db
+    depends_on:
+      - post-db
+
+  post-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: post_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - post-db-data:/var/lib/postgresql/data
+
+  # API Gateway
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - AUTH_SERVICE_URL=http://auth-service:3001
+      - USER_SERVICE_URL=http://user-service:3002
+      - POST_SERVICE_URL=http://post-service:3003
+    depends_on:
+      - auth-service
+      - user-service
+      - post-service
 
 volumes:
-  pgdata:
-    driver: local
+  auth-db-data:
+  user-db-data:
+  post-db-data:
